@@ -338,21 +338,15 @@
 
     .kiosk-content {
       display: grid;
-      grid-template-columns: 86px 1fr;
+      grid-template-columns: 1fr;
       gap: 0;
       min-height: 620px;
     }
-
+    
     .category-rail {
-      background: #fffaf3;
-      border-right: 1px solid var(--border);
-      padding: 12px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
+      display: none;
     }
-
+    
     .category-btn {
       width: 62px;
       min-height: 62px;
@@ -413,10 +407,10 @@
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(150px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(4, minmax(190px, 1fr));
+      gap: 14px;
     }
-
+    
     .product-card {
       background: white;
       border: 2px solid transparent;
@@ -1697,7 +1691,7 @@
 
       return "🍫 🍦";
     }
-
+ 
     function getRailEmoji(name, description) {
       const n = (String(name || "") + " " + String(description || "")).toLowerCase();
 
