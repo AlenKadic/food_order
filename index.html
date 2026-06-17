@@ -1,25 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="hr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Naručivanje hrane</title>
+
+  <title>Slatke narudžbe</title>
 
   <style>
     :root {
-      --yellow: #ffcb05;
-      --yellow-dark: #f2b700;
-      --red: #d91f26;
-      --green: #0ea44b;
-      --dark: #202124;
-      --text: #222;
-      --muted: #6b7280;
-      --bg: #efefef;
+      --cream: #fbf4ee;
+      --cream-2: #f7eadf;
+      --caramel: #c47a2c;
+      --caramel-dark: #9a5a1e;
+      --chocolate: #5b2c24;
+      --chocolate-dark: #2f1713;
+      --berry: #a23b72;
+      --pistachio: #6f8f4e;
+      --pistachio-dark: #546f3c;
+      --vanilla: #fffaf3;
+      --text: #241a16;
+      --muted: #7a6a62;
+      --bg: #fbf4ee;
       --card: #ffffff;
-      --border: #d8dadd;
-      --soft: #f7f7f7;
+      --border: #e5d7cc;
+      --soft: #f7efe8;
       --danger: #dc2626;
-      --shadow: 0 10px 28px rgba(0,0,0,0.08);
+      --shadow: 0 10px 28px rgba(91, 44, 36, 0.12);
       --radius: 18px;
     }
 
@@ -31,7 +38,10 @@
       margin: 0;
       padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top left, rgba(196, 122, 44, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(162, 59, 114, 0.12), transparent 26%),
+        var(--bg);
       color: var(--text);
     }
 
@@ -60,39 +70,53 @@
       border: 0;
       border-radius: 12px;
       padding: 12px 16px;
-      font-weight: 800;
+      font-weight: 850;
       cursor: pointer;
-      transition: .15s ease;
+      transition: 0.15s ease;
     }
 
     .btn:hover {
       transform: translateY(-1px);
     }
 
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .btn-primary {
-      background: var(--red);
+      background: var(--chocolate);
       color: white;
     }
 
+    .btn-primary:hover {
+      background: var(--chocolate-dark);
+    }
+
     .btn-dark {
-      background: #111827;
+      background: var(--chocolate-dark);
       color: white;
     }
 
     .btn-light {
       background: white;
-      color: #111827;
+      color: var(--text);
       border: 1px solid var(--border);
     }
 
     .btn-green {
-      background: var(--green);
+      background: var(--pistachio);
       color: white;
     }
 
-    .btn-yellow {
-      background: var(--yellow);
-      color: #3d2b00;
+    .btn-green:hover {
+      background: var(--pistachio-dark);
+    }
+
+    .btn-caramel {
+      background: var(--caramel);
+      color: white;
     }
 
     .btn-danger {
@@ -104,7 +128,7 @@
       padding: 8px 10px;
       border-radius: 10px;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 850;
     }
 
     .error-box {
@@ -116,34 +140,32 @@
       background: #fef2f2;
       border: 1px solid #fecaca;
       color: #991b1b;
-      font-weight: 700;
+      font-weight: 750;
     }
 
-    /* HOME / NAME SCREEN */
     .welcome-wrap {
       min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 30px 16px;
-      background:
-        linear-gradient(180deg, rgba(255,203,5,0.18), rgba(255,255,255,0.55)),
-        var(--bg);
     }
 
     .welcome-card {
       width: 100%;
-      max-width: 720px;
+      max-width: 760px;
       background: white;
-      border-radius: 28px;
+      border-radius: 30px;
       overflow: hidden;
-      box-shadow: 0 16px 44px rgba(0,0,0,0.12);
+      box-shadow: 0 16px 44px rgba(91, 44, 36, 0.16);
       border: 1px solid var(--border);
     }
 
     .welcome-hero {
-      background: linear-gradient(90deg, var(--yellow), #ffd84d);
-      padding: 30px 28px;
-      min-height: 140px;
+      background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.26), transparent 34%),
+        linear-gradient(90deg, var(--chocolate), var(--caramel));
+      padding: 32px 28px;
+      min-height: 150px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -151,19 +173,19 @@
     }
 
     .welcome-title {
-      font-size: clamp(28px, 4vw, 48px);
+      font-size: clamp(30px, 4vw, 52px);
       line-height: 0.95;
       font-weight: 950;
       letter-spacing: -0.06em;
       margin: 0;
-      color: #1f2937;
+      color: white;
     }
 
     .welcome-subtitle {
       margin-top: 10px;
-      color: #4b5563;
+      color: rgba(255,255,255,0.86);
       font-size: 16px;
-      max-width: 420px;
+      max-width: 460px;
     }
 
     .welcome-icons {
@@ -172,22 +194,24 @@
       font-size: 42px;
       flex-wrap: wrap;
       justify-content: flex-end;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
     }
 
     .welcome-body {
       padding: 28px;
+      background: var(--vanilla);
     }
 
     .field-label {
       display: block;
-      font-weight: 800;
+      font-weight: 850;
       margin-bottom: 8px;
     }
 
     .input {
       width: 100%;
       border: 1px solid var(--border);
-      background: #fff;
+      background: white;
       border-radius: 14px;
       padding: 15px 16px;
       font-size: 16px;
@@ -197,8 +221,8 @@
 
     .input:focus,
     .textarea:focus {
-      border-color: var(--red);
-      box-shadow: 0 0 0 4px rgba(217,31,38,0.10);
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 4px rgba(196, 122, 44, 0.14);
     }
 
     .textarea {
@@ -206,7 +230,7 @@
       min-height: 94px;
       resize: vertical;
       border: 1px solid var(--border);
-      background: #fff;
+      background: white;
       border-radius: 14px;
       padding: 14px 16px;
       outline: none;
@@ -217,10 +241,10 @@
       margin-top: 14px;
       padding: 14px 16px;
       border-radius: 14px;
-      background: #fff8e1;
-      border: 1px solid #f1d27a;
-      color: #7c5a00;
-      font-weight: 700;
+      background: #fff8ef;
+      border: 1px solid #f3c99c;
+      color: #7c4a13;
+      font-weight: 750;
     }
 
     .loading {
@@ -229,7 +253,6 @@
       font-size: 14px;
     }
 
-    /* KIOSK MENU */
     .kiosk-page {
       min-height: 100vh;
       padding: 18px 18px 110px;
@@ -238,16 +261,18 @@
     .kiosk-shell {
       max-width: 1220px;
       margin: 0 auto;
-      background: #f4f4f4;
+      background: #f7efe8;
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 22px;
       overflow: hidden;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+      box-shadow: 0 16px 36px rgba(91, 44, 36, 0.12);
     }
 
     .kiosk-header {
-      background: linear-gradient(90deg, var(--yellow), #ffd84d);
-      min-height: 88px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.26), transparent 32%),
+        linear-gradient(90deg, var(--chocolate), var(--caramel));
+      min-height: 92px;
       padding: 12px 20px;
       display: flex;
       align-items: center;
@@ -267,6 +292,7 @@
       gap: 10px;
       font-size: 36px;
       flex-wrap: wrap;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
     }
 
     .header-title-block {
@@ -274,25 +300,26 @@
     }
 
     .header-title {
-      font-size: 22px;
-      font-weight: 900;
+      font-size: 23px;
+      font-weight: 950;
       line-height: 1.05;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       margin: 0;
+      color: white;
     }
 
     .header-sub {
       font-size: 13px;
-      color: #5b4a00;
+      color: rgba(255,255,255,0.84);
       margin-top: 4px;
     }
 
     .search-box {
-      min-width: 210px;
-      max-width: 260px;
+      min-width: 220px;
+      max-width: 270px;
       width: 100%;
-      background: rgba(255,255,255,0.95);
-      border: 2px solid rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.96);
+      border: 2px solid rgba(255,255,255,0.35);
       border-radius: 999px;
       padding: 10px 14px;
       display: flex;
@@ -306,6 +333,7 @@
       background: transparent;
       width: 100%;
       font-size: 14px;
+      color: var(--text);
     }
 
     .kiosk-content {
@@ -316,7 +344,7 @@
     }
 
     .category-rail {
-      background: #fbfbfb;
+      background: #fffaf3;
       border-right: 1px solid var(--border);
       padding: 12px 8px;
       display: flex;
@@ -328,7 +356,7 @@
     .category-btn {
       width: 62px;
       min-height: 62px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid var(--border);
       background: white;
       display: flex;
@@ -336,8 +364,8 @@
       justify-content: center;
       font-size: 30px;
       cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-      transition: .15s ease;
+      box-shadow: 0 3px 8px rgba(91, 44, 36, 0.06);
+      transition: 0.15s ease;
       padding: 4px;
     }
 
@@ -346,8 +374,9 @@
     }
 
     .category-btn.active {
-      border: 2px solid var(--yellow-dark);
-      box-shadow: 0 0 0 2px rgba(255,203,5,0.22);
+      border: 2px solid var(--caramel);
+      box-shadow: 0 0 0 3px rgba(196, 122, 44, 0.18);
+      background: #fff7ed;
     }
 
     .menu-area {
@@ -364,9 +393,9 @@
 
     .menu-area h1 {
       margin: 0;
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
+      font-size: 26px;
+      font-weight: 950;
+      letter-spacing: -0.05em;
     }
 
     .customer-chip {
@@ -378,8 +407,8 @@
       border: 1px solid var(--border);
       padding: 10px 14px;
       font-size: 14px;
-      font-weight: 800;
-      color: #374151;
+      font-weight: 850;
+      color: var(--text);
     }
 
     .product-grid {
@@ -391,39 +420,44 @@
     .product-card {
       background: white;
       border: 2px solid transparent;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 14px;
-      min-height: 230px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      min-height: 245px;
+      box-shadow: 0 2px 8px rgba(91, 44, 36, 0.05);
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      transition: .14s ease;
+      transition: 0.14s ease;
     }
 
     .product-card:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 18px rgba(91, 44, 36, 0.10);
     }
 
     .product-card.selected {
-      border-color: var(--yellow-dark);
-      box-shadow: 0 0 0 3px rgba(255,203,5,0.20);
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 3px rgba(196, 122, 44, 0.18);
     }
 
     .product-visual {
       height: 112px;
-      border-radius: 12px;
-      background: #fafafa;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.92), transparent 55%),
+        linear-gradient(135deg, #fff8ef, #f2dfd0);
       display: grid;
       place-items: center;
-      font-size: 64px;
+      font-size: 38px;
+      line-height: 1.15;
+      white-space: nowrap;
       margin-bottom: 14px;
+      overflow: hidden;
     }
 
     .product-name {
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.2;
       min-height: 38px;
       margin-bottom: 8px;
@@ -439,7 +473,8 @@
 
     .product-price {
       font-size: 18px;
-      font-weight: 900;
+      font-weight: 950;
+      color: var(--chocolate);
     }
 
     .bottom-order-bar {
@@ -450,7 +485,7 @@
       z-index: 40;
       background: white;
       border-top: 1px solid var(--border);
-      box-shadow: 0 -8px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 -8px 20px rgba(91, 44, 36, 0.08);
     }
 
     .bottom-order-inner {
@@ -460,15 +495,17 @@
     }
 
     .order-mini-strip {
-      background: var(--yellow);
-      color: #3d2b00;
-      font-weight: 800;
+      background: var(--cream-2);
+      color: var(--chocolate);
+      font-weight: 850;
       font-size: 14px;
       display: flex;
       justify-content: space-between;
       gap: 12px;
       padding: 10px 14px;
       border-radius: 10px 10px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: 0;
     }
 
     .order-panel {
@@ -480,7 +517,7 @@
     }
 
     .selected-summary {
-      background: #fff;
+      background: white;
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px 14px;
@@ -491,12 +528,13 @@
     }
 
     .selected-summary-emoji {
-      font-size: 30px;
+      font-size: 28px;
       line-height: 1;
+      white-space: nowrap;
     }
 
     .selected-summary-title {
-      font-weight: 900;
+      font-weight: 950;
       line-height: 1.15;
     }
 
@@ -520,7 +558,7 @@
       max-width: 720px;
       margin: 50px auto;
       background: white;
-      border-radius: 22px;
+      border-radius: 24px;
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -528,14 +566,18 @@
 
     .thanks-top,
     .admin-login-top {
-      background: linear-gradient(90deg, var(--yellow), #ffd84d);
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.26), transparent 32%),
+        linear-gradient(90deg, var(--chocolate), var(--caramel));
       padding: 24px;
+      color: white;
     }
 
     .thanks-body,
     .admin-login-body {
       padding: 24px;
       text-align: center;
+      background: var(--vanilla);
     }
 
     .big-emoji {
@@ -544,16 +586,15 @@
     }
 
     .success-box {
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
-      color: #166534;
+      background: #f1f8ec;
+      border: 1px solid #cfe5c4;
+      color: #385824;
       padding: 14px 16px;
       border-radius: 12px;
-      font-weight: 800;
+      font-weight: 850;
       margin: 18px 0;
     }
 
-    /* ADMIN */
     .admin-page {
       max-width: 1220px;
       margin: 0 auto;
@@ -584,7 +625,7 @@
     .panel-title {
       margin: 0 0 12px;
       font-size: 24px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing: -0.04em;
     }
 
@@ -596,9 +637,9 @@
     }
 
     .meta-chip {
-      background: #f3f4f6;
+      background: var(--soft);
       border: 1px solid var(--border);
-      color: #4b5563;
+      color: var(--muted);
       padding: 8px 10px;
       border-radius: 999px;
       font-size: 13px;
@@ -613,7 +654,7 @@
     }
 
     .kpi {
-      background: #fafafa;
+      background: #fffaf3;
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 14px;
@@ -622,14 +663,14 @@
     .kpi strong {
       display: block;
       font-size: 28px;
-      font-weight: 900;
+      font-weight: 950;
       letter-spacing: -0.05em;
     }
 
     .kpi span {
       font-size: 12px;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 750;
     }
 
     .toolbar {
@@ -661,7 +702,7 @@
       align-items: center;
       gap: 10px;
       min-width: 0;
-      font-weight: 800;
+      font-weight: 850;
     }
 
     .pill {
@@ -672,9 +713,9 @@
       align-items: center;
       justify-content: center;
       padding: 0 10px;
-      background: var(--red);
+      background: var(--chocolate);
       color: white;
-      font-weight: 900;
+      font-weight: 950;
     }
 
     .table-wrap {
@@ -700,8 +741,8 @@
     }
 
     th {
-      background: #f9fafb;
-      color: #374151;
+      background: #fffaf3;
+      color: var(--chocolate);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       font-size: 12px;
@@ -724,13 +765,13 @@
     }
 
     .status-making {
-      background: #fef3c7;
-      color: #92400e;
+      background: #fff0d9;
+      color: #8a4b0f;
     }
 
     .status-done {
-      background: #dcfce7;
-      color: #166534;
+      background: #ecf7e8;
+      color: #385824;
     }
 
     .order-actions {
@@ -823,7 +864,9 @@
       }
     }
   </style>
+
 </head>
+
 <body>
   <div class="top-actions">
     <button class="btn btn-light" onclick="goHome()">Početak</button>
@@ -832,211 +875,222 @@
 
   <div id="globalError" class="error-box"></div>
 
-  <!-- NAME SCREEN -->
   <section id="screenName" class="screen active">
     <div class="welcome-wrap">
       <div class="welcome-card">
         <div class="welcome-hero">
           <div>
-            <h1 class="welcome-title">Odaberi svoj obrok</h1>
+            <h1 class="welcome-title">Složi svoju slatku kombinaciju</h1>
             <div class="welcome-subtitle">
-              Upiši ime i nastavi na kiosk ekran za odabir današnjeg jela.
+              Upiši ime i odaberi današnju brownie, sladoled ili voćnu kombinaciju.
             </div>
           </div>
 
-          <div class="welcome-icons" aria-hidden="true">
-            <span>🍟</span>
-            <span>🍦</span>
-            <span>🍗</span>
-            <span>🍔</span>
-          </div>
-        </div>
-
-        <div class="welcome-body">
-          <label class="field-label" for="customerName">Ime i prezime</label>
-          <input id="customerName" class="input" type="text" placeholder="npr. Ivan Horvat" autocomplete="off" />
-
-          <button id="continueBtn" class="btn btn-primary" onclick="continueToMenu()">Nastavi na odabir jela</button>
-
-          <div id="menuLoading" class="loading">Učitavam današnji meni...</div>
-
-          <div id="noMenuNotice" class="notice">
-            Meni trenutno nije dostupan. Provjeri Google Sheet tab <strong>Menu</strong> i vrijednosti <strong>aktivno = DA</strong>.
-          </div>
-        </div>
+```
+      <div class="welcome-icons" aria-hidden="true">
+        <span>🍫</span>
+        <span>🍦</span>
+        <span>🫐</span>
+        <span>🥜</span>
       </div>
     </div>
+
+    <div class="welcome-body">
+      <label class="field-label" for="customerName">Ime i prezime</label>
+      <input id="customerName" class="input" type="text" placeholder="npr. Ivan Horvat" autocomplete="off" />
+
+      <button id="continueBtn" class="btn btn-primary" onclick="continueToMenu()">Nastavi na odabir kombinacije</button>
+
+      <div id="menuLoading" class="loading">Učitavam današnje kombinacije...</div>
+
+      <div id="noMenuNotice" class="notice">
+        Meni trenutno nije dostupan. Provjeri Google Sheet tab <strong>Menu</strong> i vrijednosti <strong>aktivno = DA</strong>.
+      </div>
+    </div>
+  </div>
+</div>
+```
+
   </section>
 
-  <!-- MENU SCREEN -->
   <section id="screenMenu" class="screen">
     <div class="kiosk-page">
       <div class="kiosk-shell">
         <div class="kiosk-header">
           <div class="header-left">
             <div class="header-foods" aria-hidden="true">
-              <span>🍟</span>
+              <span>🍫</span>
               <span>🍦</span>
-              <span>🍗</span>
-              <span>🍔</span>
+              <span>🫐</span>
+              <span>🍯</span>
+              <span>🥜</span>
             </div>
 
-            <div class="header-title-block">
-              <h2 class="header-title">Današnji meni</h2>
-              <div class="header-sub">Brz i jednostavan odabir obroka</div>
-            </div>
-          </div>
-
-          <div class="search-box">
-            <input id="menuSearch" type="text" placeholder="Pretraži jela" />
-            <span>🔍</span>
-          </div>
+```
+        <div class="header-title-block">
+          <h2 class="header-title">Današnje slatke kombinacije</h2>
+          <div class="header-sub">Brownie · sladoled · sirupi · namazi · voće · orašasti dodaci</div>
         </div>
+      </div>
 
-        <div class="kiosk-content">
-          <aside id="categoryRail" class="category-rail"></aside>
-
-          <main class="menu-area">
-            <div class="menu-area-top">
-              <h1>Odaberi jelo</h1>
-              <div class="customer-chip">👤 <span id="customerNamePreview"></span></div>
-            </div>
-
-            <div id="productGrid" class="product-grid"></div>
-          </main>
-        </div>
+      <div class="search-box">
+        <input id="menuSearch" type="text" placeholder="Pretraži kombinacije" />
+        <span>🔍</span>
       </div>
     </div>
 
-    <div class="bottom-order-bar">
-      <div class="bottom-order-inner">
-        <div class="order-mini-strip">
-          <span id="selectedCountText">0 odabranih jela</span>
-          <span>Klikni na jelo pa potvrdi narudžbu</span>
+    <div class="kiosk-content">
+      <aside id="categoryRail" class="category-rail"></aside>
+
+      <main class="menu-area">
+        <div class="menu-area-top">
+          <h1>Odaberi kombinaciju</h1>
+          <div class="customer-chip">👤 <span id="customerNamePreview"></span></div>
         </div>
 
-        <div class="order-panel">
-          <div id="selectedSummary" class="selected-summary">
-            <div class="selected-summary-emoji">🍽️</div>
-            <div>
-              <div class="selected-summary-title">Još nije odabrano jelo</div>
-              <div class="selected-summary-sub">Odaberi jednu stavku iz menija</div>
-            </div>
-          </div>
+        <div id="productGrid" class="product-grid"></div>
+      </main>
+    </div>
+  </div>
+</div>
 
-          <div class="note-wrap">
-            <textarea id="orderNote" class="textarea" placeholder="Napomena: npr. bez određenog sastojka, dodati određeni sastojak..."></textarea>
-          </div>
+<div class="bottom-order-bar">
+  <div class="bottom-order-inner">
+    <div class="order-mini-strip">
+      <span id="selectedCountText">0 odabranih kombinacija</span>
+      <span>Klikni na kombinaciju pa potvrdi narudžbu</span>
+    </div>
 
-          <button class="btn btn-light" onclick="goHome()">Odustani</button>
-          <button id="submitOrderBtn" class="btn btn-green" onclick="submitSelectedOrder()" disabled>Dodaj narudžbu</button>
+    <div class="order-panel">
+      <div id="selectedSummary" class="selected-summary">
+        <div class="selected-summary-emoji">🍨</div>
+        <div>
+          <div class="selected-summary-title">Još nije odabrana kombinacija</div>
+          <div class="selected-summary-sub">Odaberi jednu stavku iz ponude</div>
         </div>
       </div>
+
+      <div class="note-wrap">
+        <textarea id="orderNote" class="textarea" placeholder="Napomena: npr. bez malina, više sirupa, bez oraha, dodatni sladoled..."></textarea>
+      </div>
+
+      <button class="btn btn-light" onclick="goHome()">Odustani</button>
+      <button id="submitOrderBtn" class="btn btn-green" onclick="submitSelectedOrder()" disabled>Dodaj narudžbu</button>
     </div>
+  </div>
+</div>
+```
+
   </section>
 
-  <!-- THANKS SCREEN -->
   <section id="screenThanks" class="screen">
     <div class="welcome-wrap">
       <div class="thanks-card">
         <div class="thanks-top">
           <div class="big-emoji">✅</div>
-          <h2 style="margin:0;font-size:34px;font-weight:900;letter-spacing:-0.05em;">Narudžba zaprimljena</h2>
+          <h2 style="margin:0;font-size:34px;font-weight:950;letter-spacing:-0.05em;">Narudžba zaprimljena</h2>
         </div>
 
-        <div class="thanks-body">
-          <div class="success-box">Hvala! Tvoja narudžba je uspješno spremljena.</div>
-          <p id="orderConfirmation" class="muted"></p>
+```
+    <div class="thanks-body">
+      <div class="success-box">Hvala! Tvoja slatka kombinacija je uspješno spremljena.</div>
+      <p id="orderConfirmation" class="muted"></p>
 
-          <button class="btn btn-primary" onclick="resetForNextCustomer()">Nova narudžba</button>
-        </div>
-      </div>
+      <button class="btn btn-primary" onclick="resetForNextCustomer()">Nova narudžba</button>
     </div>
+  </div>
+</div>
+```
+
   </section>
 
-  <!-- ADMIN LOGIN -->
   <section id="screenAdminLogin" class="screen">
     <div class="welcome-wrap">
       <div class="admin-login-card">
         <div class="admin-login-top">
           <div class="big-emoji">🔐</div>
-          <h2 style="margin:0;font-size:34px;font-weight:900;letter-spacing:-0.05em;">Admin prijava</h2>
+          <h2 style="margin:0;font-size:34px;font-weight:950;letter-spacing:-0.05em;">Admin prijava</h2>
         </div>
 
-        <div class="admin-login-body">
-          <p class="muted">Upiši admin PIN za pregled liste narudžbi.</p>
+```
+    <div class="admin-login-body">
+      <p class="muted">Upiši admin PIN za pregled liste narudžbi.</p>
 
-          <label class="field-label" for="adminPin">Admin PIN</label>
-          <input id="adminPin" class="input" type="password" placeholder="PIN" autocomplete="off" />
+      <label class="field-label" for="adminPin">Admin PIN</label>
+      <input id="adminPin" class="input" type="password" placeholder="PIN" autocomplete="off" />
 
-          <button class="btn btn-dark" onclick="adminLogin()">Uđi u admin</button>
-        </div>
-      </div>
+      <button class="btn btn-dark" onclick="adminLogin()">Uđi u admin</button>
     </div>
+  </div>
+</div>
+```
+
   </section>
 
-  <!-- ADMIN -->
   <section id="screenAdmin" class="screen">
     <div class="admin-page">
       <div class="admin-layout">
         <aside class="panel panel-side">
           <h2 class="panel-title">Admin panel</h2>
 
-          <div class="meta-row">
-            <span class="meta-chip" id="adminLastRefresh">Zadnje osvježenje: -</span>
-            <span class="meta-chip" id="adminTotalOrders">Narudžbe: 0</span>
-          </div>
-
-          <div class="admin-kpis">
-            <div class="kpi">
-              <strong id="kpiActive">0</strong>
-              <span>za izradu</span>
-            </div>
-            <div class="kpi">
-              <strong id="kpiDone">0</strong>
-              <span>gotovo</span>
-            </div>
-          </div>
-
-          <div class="toolbar">
-            <button class="btn btn-primary btn-small" onclick="loadAdminOrders()">Osvježi</button>
-            <button class="btn btn-green btn-small" onclick="exportCsv()">CSV</button>
-            <button class="btn btn-danger btn-small" onclick="clearOrders()">Obriši sve</button>
-          </div>
-
-          <h3>Sažetak za izradu</h3>
-          <p class="muted" style="margin-top:-4px;">Broje se samo narudžbe koje nisu označene kao gotovo.</p>
-          <div id="summaryList" class="summary-list"></div>
-
-          <h3>Trenutni meni</h3>
-          <div id="adminMenuList" class="summary-list"></div>
-        </aside>
-
-        <main class="panel panel-main">
-          <h2 class="panel-title">Lista narudžbi</h2>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Vrijeme</th>
-                  <th>Ime</th>
-                  <th>Jelo</th>
-                  <th>Napomena</th>
-                  <th>Status</th>
-                  <th>Akcije</th>
-                </tr>
-              </thead>
-              <tbody id="ordersTableBody">
-                <tr>
-                  <td colspan="6">Učitavam...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </main>
+```
+      <div class="meta-row">
+        <span class="meta-chip" id="adminLastRefresh">Zadnje osvježenje: -</span>
+        <span class="meta-chip" id="adminTotalOrders">Narudžbe: 0</span>
       </div>
-    </div>
+
+      <div class="admin-kpis">
+        <div class="kpi">
+          <strong id="kpiActive">0</strong>
+          <span>za izradu</span>
+        </div>
+        <div class="kpi">
+          <strong id="kpiDone">0</strong>
+          <span>gotovo</span>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn btn-primary btn-small" onclick="loadAdminOrders()">Osvježi</button>
+        <button class="btn btn-green btn-small" onclick="exportCsv()">CSV</button>
+        <button class="btn btn-danger btn-small" onclick="clearOrders()">Obriši sve</button>
+      </div>
+
+      <h3>Sažetak za izradu</h3>
+      <p class="muted" style="margin-top:-4px;">Broje se samo narudžbe koje nisu označene kao gotovo.</p>
+      <div id="summaryList" class="summary-list"></div>
+
+      <h3>Trenutna ponuda</h3>
+      <div id="adminMenuList" class="summary-list"></div>
+    </aside>
+
+    <main class="panel panel-main">
+      <h2 class="panel-title">Lista narudžbi</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Vrijeme</th>
+              <th>Ime</th>
+              <th>Kombinacija</th>
+              <th>Napomena</th>
+              <th>Status</th>
+              <th>Akcije</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <tr>
+              <td colspan="6">Učitavam...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+```
+
   </section>
 
   <script>
@@ -1187,7 +1241,6 @@
         notice.style.display = "block";
         continueBtn.disabled = true;
       } else {
-        notice.style.display = "block";
         notice.style.display = "none";
         continueBtn.disabled = false;
       }
@@ -1204,7 +1257,7 @@
       }
 
       if (!state.menu.length) {
-        alert("Meni trenutno nije dostupan.");
+        alert("Ponuda trenutno nije dostupna.");
         return;
       }
 
@@ -1232,7 +1285,7 @@
         const btn = document.createElement("button");
         btn.className = "category-btn" + (state.selectedMenuId === item.id ? " active" : "");
         btn.title = item.name;
-        btn.innerHTML = getMealEmoji(item.name);
+        btn.innerHTML = getRailEmoji(item.name, item.description);
         btn.onclick = function() {
           selectMeal(item.id);
         };
@@ -1255,11 +1308,10 @@
       });
 
       if (!visibleMenu.length) {
-        grid.innerHTML = `
-          <div style="grid-column:1/-1;background:white;border:1px solid var(--border);border-radius:14px;padding:20px;">
-            Nema rezultata za ovu pretragu.
-          </div>
-        `;
+        grid.innerHTML =
+          "<div style='grid-column:1/-1;background:white;border:1px solid var(--border);border-radius:14px;padding:20px;'>" +
+            "Nema rezultata za ovu pretragu." +
+          "</div>";
         return;
       }
 
@@ -1270,12 +1322,11 @@
           selectMeal(item.id);
         };
 
-        card.innerHTML = `
-          <div class="product-visual">${escapeHtml(getMealEmoji(item.name))}</div>
-          <div class="product-name">${escapeHtml(item.name || "")}</div>
-          <div class="product-desc">${escapeHtml(item.description || "Bez dodatnog opisa.")}</div>
-          <div class="product-price">${escapeHtml(item.price || "")}</div>
-        `;
+        card.innerHTML =
+          "<div class='product-visual'>" + escapeHtml(getDessertVisual(item.name, item.description)) + "</div>" +
+          "<div class='product-name'>" + escapeHtml(item.name || "") + "</div>" +
+          "<div class='product-desc'>" + escapeHtml(item.description || "Brownie, sladoled i slatki dodaci.") + "</div>" +
+          "<div class='product-price'>" + escapeHtml(item.price || "") + "</div>";
 
         grid.appendChild(card);
       });
@@ -1298,29 +1349,27 @@
       const selectedCountText = document.getElementById("selectedCountText");
 
       if (!selected) {
-        selectedCountText.textContent = "0 odabranih jela";
+        selectedCountText.textContent = "0 odabranih kombinacija";
         submitBtn.disabled = true;
 
-        summary.innerHTML = `
-          <div class="selected-summary-emoji">🍽️</div>
-          <div>
-            <div class="selected-summary-title">Još nije odabrano jelo</div>
-            <div class="selected-summary-sub">Odaberi jednu stavku iz menija</div>
-          </div>
-        `;
+        summary.innerHTML =
+          "<div class='selected-summary-emoji'>🍨</div>" +
+          "<div>" +
+            "<div class='selected-summary-title'>Još nije odabrana kombinacija</div>" +
+            "<div class='selected-summary-sub'>Odaberi jednu stavku iz ponude</div>" +
+          "</div>";
         return;
       }
 
-      selectedCountText.textContent = "1 odabrano jelo";
+      selectedCountText.textContent = "1 odabrana kombinacija";
       submitBtn.disabled = false;
 
-      summary.innerHTML = `
-        <div class="selected-summary-emoji">${escapeHtml(getMealEmoji(selected.name))}</div>
-        <div>
-          <div class="selected-summary-title">${escapeHtml(selected.name)}</div>
-          <div class="selected-summary-sub">${escapeHtml(selected.price || "")}</div>
-        </div>
-      `;
+      summary.innerHTML =
+        "<div class='selected-summary-emoji'>" + escapeHtml(getDessertVisual(selected.name, selected.description)) + "</div>" +
+        "<div>" +
+          "<div class='selected-summary-title'>" + escapeHtml(selected.name) + "</div>" +
+          "<div class='selected-summary-sub'>" + escapeHtml(selected.price || "Brownie + sladoled + dodaci") + "</div>" +
+        "</div>";
     }
 
     async function submitSelectedOrder() {
@@ -1329,7 +1378,7 @@
       });
 
       if (!selected) {
-        alert("Prvo odaberi jelo.");
+        alert("Prvo odaberi kombinaciju.");
         return;
       }
 
@@ -1451,40 +1500,38 @@
       tbody.innerHTML = "";
 
       if (!state.orders.length) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6">Još nema narudžbi.</td>
-          </tr>
-        `;
+        tbody.innerHTML =
+          "<tr>" +
+            "<td colspan='6'>Još nema narudžbi.</td>" +
+          "</tr>";
         return;
       }
 
       state.orders.forEach(function(order) {
         const tr = document.createElement("tr");
 
-        tr.innerHTML = `
-          <td>${escapeHtml(order.time || "")}</td>
-          <td>${escapeHtml(order.name || "")}</td>
-          <td>
-            <div style="display:flex;align-items:flex-start;gap:10px;">
-              <span style="font-size:24px;line-height:1;">${escapeHtml(getMealEmoji(order.mealName))}</span>
-              <div>
-                <div style="font-weight:800;">${escapeHtml(order.mealName || "")}</div>
-                <div class="muted">${escapeHtml(order.price || "")}</div>
-              </div>
-            </div>
-          </td>
-          <td>${escapeHtml(order.note || "")}</td>
-          <td><span class="status ${statusClass(order.status)}">${escapeHtml(order.status || "novo")}</span></td>
-          <td>
-            <div class="order-actions">
-              <button class="btn btn-yellow btn-small" onclick="changeStatus('${escapeJs(order.id)}','u izradi')">U izradi</button>
-              <button class="btn btn-green btn-small" onclick="changeStatus('${escapeJs(order.id)}','gotovo')">Gotovo</button>
-              <button class="btn btn-light btn-small" onclick="changeStatus('${escapeJs(order.id)}','novo')">Novo</button>
-              <button class="btn btn-danger btn-small" onclick="deleteOrder('${escapeJs(order.id)}')">Obriši</button>
-            </div>
-          </td>
-        `;
+        tr.innerHTML =
+          "<td>" + escapeHtml(order.time || "") + "</td>" +
+          "<td>" + escapeHtml(order.name || "") + "</td>" +
+          "<td>" +
+            "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
+              "<span style='font-size:22px;line-height:1;white-space:nowrap;'>" + escapeHtml(getRailEmoji(order.mealName, "")) + "</span>" +
+              "<div>" +
+                "<div style='font-weight:850;'>" + escapeHtml(order.mealName || "") + "</div>" +
+                "<div class='muted'>" + escapeHtml(order.price || "") + "</div>" +
+              "</div>" +
+            "</div>" +
+          "</td>" +
+          "<td>" + escapeHtml(order.note || "") + "</td>" +
+          "<td><span class='status " + statusClass(order.status) + "'>" + escapeHtml(order.status || "novo") + "</span></td>" +
+          "<td>" +
+            "<div class='order-actions'>" +
+              "<button class='btn btn-caramel btn-small' onclick=\"changeStatus('" + escapeJs(order.id) + "','u izradi')\">U izradi</button>" +
+              "<button class='btn btn-green btn-small' onclick=\"changeStatus('" + escapeJs(order.id) + "','gotovo')\">Gotovo</button>" +
+              "<button class='btn btn-light btn-small' onclick=\"changeStatus('" + escapeJs(order.id) + "','novo')\">Novo</button>" +
+              "<button class='btn btn-danger btn-small' onclick=\"deleteOrder('" + escapeJs(order.id) + "')\">Obriši</button>" +
+            "</div>" +
+          "</td>";
 
         tbody.appendChild(tr);
       });
@@ -1496,7 +1543,7 @@
       state.orders.forEach(function(order) {
         if (order.status === "gotovo") return;
 
-        const meal = order.mealName || "Nepoznato jelo";
+        const meal = order.mealName || "Nepoznata kombinacija";
         summary[meal] = (summary[meal] || 0) + 1;
       });
 
@@ -1508,7 +1555,7 @@
       });
 
       if (!entries.length) {
-        list.innerHTML = `<div class="muted">Trenutno nema aktivnih narudžbi za izradu.</div>`;
+        list.innerHTML = "<div class='muted'>Trenutno nema aktivnih narudžbi za izradu.</div>";
         return;
       }
 
@@ -1518,13 +1565,12 @@
 
         const item = document.createElement("div");
         item.className = "summary-item";
-        item.innerHTML = `
-          <div class="summary-item-left">
-            <span style="font-size:22px;">${escapeHtml(getMealEmoji(meal))}</span>
-            <span>${escapeHtml(meal)}</span>
-          </div>
-          <span class="pill">${count}</span>
-        `;
+        item.innerHTML =
+          "<div class='summary-item-left'>" +
+            "<span style='font-size:22px;'>" + escapeHtml(getRailEmoji(meal, "")) + "</span>" +
+            "<span>" + escapeHtml(meal) + "</span>" +
+          "</div>" +
+          "<span class='pill'>" + count + "</span>";
         list.appendChild(item);
       });
     }
@@ -1534,20 +1580,20 @@
       list.innerHTML = "";
 
       if (!state.menu.length) {
-        list.innerHTML = `<div class="muted">Meni nije učitan.</div>`;
+        list.innerHTML = "<div class='muted'>Ponuda nije učitana.</div>";
         return;
       }
 
       state.menu.forEach(function(item) {
         const div = document.createElement("div");
         div.className = "summary-item";
-        div.innerHTML = `
-          <div class="summary-item-left">
-            <span style="font-size:22px;">${escapeHtml(getMealEmoji(item.name))}</span>
-            <span>${escapeHtml(item.name)}</span>
-          </div>
-          <strong>${escapeHtml(item.price || "")}</strong>
-        `;
+        div.innerHTML =
+          "<div class='summary-item-left'>" +
+            "<span style='font-size:22px;'>" + escapeHtml(getRailEmoji(item.name, item.description)) + "</span>" +
+            "<span>" + escapeHtml(item.name) + "</span>" +
+          "</div>" +
+          "<strong>" + escapeHtml(item.price || "") + "</strong>";
+
         list.appendChild(div);
       });
     }
@@ -1605,7 +1651,7 @@
         return;
       }
 
-      const header = ["Vrijeme", "Ime", "Jelo", "Cijena", "Napomena", "Status"];
+      const header = ["Vrijeme", "Ime", "Kombinacija", "Cijena", "Napomena", "Status"];
 
       const rows = state.orders.map(function(order) {
         return [
@@ -1631,29 +1677,44 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "narudzbe_hrane.csv";
+      a.download = "slatke_narudzbe.csv";
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    function getMealEmoji(name) {
-      const n = String(name || "").toLowerCase();
+    function getDessertVisual(name, description) {
+      const n = (String(name || "") + " " + String(description || "")).toLowerCase();
 
-      if (n.includes("pizza")) return "🍕";
-      if (n.includes("burger") || n.includes("cheese")) return "🍔";
-      if (n.includes("wrap") || n.includes("tortil")) return "🌯";
-      if (n.includes("pilet") || n.includes("chicken") || n.includes("crispy")) return "🍗";
-      if (n.includes("salat")) return "🥗";
-      if (n.includes("pomfrit") || n.includes("krumpir")) return "🍟";
-      if (n.includes("sendvi") || n.includes("sandwich")) return "🥪";
-      if (n.includes("hot dog")) return "🌭";
-      if (n.includes("vege") || n.includes("veget")) return "🥬";
-      if (n.includes("riba") || n.includes("fish")) return "🐟";
-      if (n.includes("tjesten") || n.includes("pasta")) return "🍝";
-      if (n.includes("riž") || n.includes("rice")) return "🍚";
-      if (n.includes("juha")) return "🥣";
-      if (n.includes("sladoled") || n.includes("ice") || n.includes("sundae")) return "🍦";
-      return "🍽️";
+      if (n.includes("malin") || n.includes("raspber")) return "🍫 🍦 🫐";
+      if (n.includes("med") || n.includes("orah")) return "🍫 🍦 🍯 🥜";
+      if (n.includes("pistac") || n.includes("pistać") || n.includes("pistachio")) return "🍫 🍦 💚 🥜";
+      if (n.includes("dulce") || n.includes("karamel") || n.includes("caramel") || n.includes("cimet")) return "🍫 🍦 🍮 ✨";
+      if (n.includes("jagod") || n.includes("strawber")) return "🍫 🍦 🍓";
+      if (n.includes("banan")) return "🍫 🍦 🍌";
+      if (n.includes("borov") || n.includes("blueber") || n.includes("šumsk") || n.includes("sumsk")) return "🍫 🍦 🫐";
+      if (n.includes("nutella") || n.includes("čokolad") || n.includes("cokolad")) return "🍫 🍦";
+      if (n.includes("biscoff") || n.includes("keks") || n.includes("cookie")) return "🍫 🍦 🍪";
+
+      return "🍫 🍦";
+    }
+
+    function getRailEmoji(name, description) {
+      const n = (String(name || "") + " " + String(description || "")).toLowerCase();
+
+      if (n.includes("malin") || n.includes("raspber")) return "🫐";
+      if (n.includes("med")) return "🍯";
+      if (n.includes("orah") || n.includes("orasi")) return "🥜";
+      if (n.includes("pistac") || n.includes("pistać") || n.includes("pistachio")) return "💚";
+      if (n.includes("dulce") || n.includes("karamel") || n.includes("caramel")) return "🍮";
+      if (n.includes("cimet")) return "✨";
+      if (n.includes("jagod") || n.includes("strawber")) return "🍓";
+      if (n.includes("banan")) return "🍌";
+      if (n.includes("borov") || n.includes("blueber") || n.includes("šumsk") || n.includes("sumsk")) return "🫐";
+      if (n.includes("biscoff") || n.includes("keks") || n.includes("cookie")) return "🍪";
+      if (n.includes("sladoled") || n.includes("vanil")) return "🍦";
+      if (n.includes("brownie") || n.includes("brauni") || n.includes("čokolad") || n.includes("cokolad")) return "🍫";
+
+      return "🍨";
     }
 
     function statusClass(status) {
@@ -1680,5 +1741,7 @@
       return '"' + s.replace(/"/g, '""') + '"';
     }
   </script>
+
 </body>
 </html>
+
