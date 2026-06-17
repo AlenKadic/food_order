@@ -3,184 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Naručivanje hrane</title>
 
   <style>
     :root {
-      --red: #d71920;
-      --red-dark: #a80f16;
-      --yellow: #ffc72c;
-      --orange: #ff8a00;
-      --green: #16a34a;
-      --blue: #2563eb;
-      --dark: #111827;
+      --yellow: #ffcb05;
+      --yellow-dark: #f2b700;
+      --red: #d91f26;
+      --green: #0ea44b;
+      --dark: #202124;
+      --text: #222;
       --muted: #6b7280;
-      --bg: #fff7ed;
+      --bg: #efefef;
       --card: #ffffff;
-      --border: #e5e7eb;
+      --border: #d8dadd;
+      --soft: #f7f7f7;
       --danger: #dc2626;
-      --shadow: 0 18px 45px rgba(17, 24, 39, 0.12);
-      --radius: 24px;
+      --shadow: 0 10px 28px rgba(0,0,0,0.08);
+      --radius: 18px;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      min-height: 100vh;
+      padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--dark);
-      background:
-        radial-gradient(circle at top left, rgba(255, 199, 44, 0.48), transparent 28%),
-        radial-gradient(circle at top right, rgba(215, 25, 32, 0.20), transparent 28%),
-        linear-gradient(135deg, #fff7ed 0%, #fff 42%, #fef2f2 100%);
+      background: var(--bg);
+      color: var(--text);
     }
 
-    button,
-    input,
-    textarea {
+    button, input, textarea {
       font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 18px;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      margin: -18px -18px 22px;
-      padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(229, 231, 235, 0.85);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 17px;
-      display: grid;
-      place-items: center;
-      font-size: 26px;
-      background: linear-gradient(135deg, var(--red), var(--orange));
-      box-shadow: 0 10px 20px rgba(215, 25, 32, 0.25);
-    }
-
-    .brand-title {
-      font-size: 23px;
-      line-height: 1.05;
-      font-weight: 950;
-      letter-spacing: -0.04em;
-    }
-
-    .brand-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-weight: 900;
-      color: white;
-      background: var(--red);
-      box-shadow: 0 10px 20px rgba(215, 25, 32, 0.18);
-      transition: transform 0.08s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-    }
-
-    .btn:hover {
-      background: var(--red-dark);
-      box-shadow: 0 12px 24px rgba(215, 25, 32, 0.25);
-    }
-
-    .btn:active {
-      transform: translateY(1px);
-    }
-
-    .btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .btn-light {
-      background: #ffffff;
-      color: var(--dark);
-      border: 1px solid var(--border);
-      box-shadow: none;
-    }
-
-    .btn-light:hover {
-      background: #f9fafb;
-      box-shadow: none;
-    }
-
-    .btn-dark {
-      background: var(--dark);
-    }
-
-    .btn-dark:hover {
-      background: #030712;
-    }
-
-    .btn-green {
-      background: var(--green);
-      box-shadow: 0 10px 20px rgba(22, 163, 74, 0.18);
-    }
-
-    .btn-green:hover {
-      background: #15803d;
-    }
-
-    .btn-yellow {
-      background: var(--yellow);
-      color: #451a03;
-      box-shadow: none;
-    }
-
-    .btn-blue {
-      background: var(--blue);
-    }
-
-    .btn-danger {
-      background: var(--danger);
-    }
-
-    .btn-small {
-      padding: 8px 11px;
-      font-size: 13px;
-      border-radius: 12px;
     }
 
     .screen {
@@ -191,406 +47,664 @@
       display: block;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(229, 231, 235, 0.9);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .top-actions {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 50;
+      display: flex;
+      gap: 10px;
     }
 
-    .hero {
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: white;
+    }
+
+    .btn-dark {
+      background: #111827;
+      color: white;
+    }
+
+    .btn-light {
+      background: white;
+      color: #111827;
+      border: 1px solid var(--border);
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: white;
+    }
+
+    .btn-yellow {
+      background: var(--yellow);
+      color: #3d2b00;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-small {
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .error-box {
+      display: none;
+      max-width: 1200px;
+      margin: 18px auto 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      font-weight: 700;
+    }
+
+    /* HOME / NAME SCREEN */
+    .welcome-wrap {
+      min-height: 100vh;
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
-      gap: 22px;
-      align-items: stretch;
+      place-items: center;
+      padding: 30px 16px;
+      background:
+        linear-gradient(180deg, rgba(255,203,5,0.18), rgba(255,255,255,0.55)),
+        var(--bg);
     }
 
-    .hero-main {
-      padding: 34px;
-      min-height: 430px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .welcome-card {
+      width: 100%;
+      max-width: 720px;
+      background: white;
+      border-radius: 28px;
       overflow: hidden;
-      position: relative;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.12);
+      border: 1px solid var(--border);
     }
 
-    .hero-main::after {
-      content: "🍟";
-      position: absolute;
-      right: 28px;
-      bottom: 20px;
-      font-size: 118px;
-      opacity: 0.08;
-      transform: rotate(-12deg);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      width: fit-content;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 8px 12px;
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #9a3412;
-      font-weight: 850;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      margin: 0 0 14px;
-      font-size: clamp(36px, 6vw, 68px);
-      line-height: 0.95;
-      letter-spacing: -0.07em;
-    }
-
-    h2 {
-      margin: 0 0 14px;
-      font-size: 28px;
-      letter-spacing: -0.04em;
-    }
-
-    h3 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      letter-spacing: -0.03em;
-    }
-
-    p {
-      line-height: 1.55;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .hero-text {
-      max-width: 610px;
-      margin: 0 0 24px;
-      font-size: 18px;
-      color: #4b5563;
-    }
-
-    .start-box {
-      padding: 26px;
+    .welcome-hero {
+      background: linear-gradient(90deg, var(--yellow), #ffd84d);
+      padding: 30px 28px;
+      min-height: 140px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
     }
 
-    label {
+    .welcome-title {
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 0.95;
+      font-weight: 950;
+      letter-spacing: -0.06em;
+      margin: 0;
+      color: #1f2937;
+    }
+
+    .welcome-subtitle {
+      margin-top: 10px;
+      color: #4b5563;
+      font-size: 16px;
+      max-width: 420px;
+    }
+
+    .welcome-icons {
+      display: flex;
+      gap: 10px;
+      font-size: 42px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .welcome-body {
+      padding: 28px;
+    }
+
+    .field-label {
       display: block;
-      font-weight: 850;
+      font-weight: 800;
       margin-bottom: 8px;
-      text-align: left;
     }
 
-    input,
-    textarea {
+    .input {
       width: 100%;
       border: 1px solid var(--border);
-      border-radius: 18px;
-      background: white;
+      background: #fff;
+      border-radius: 14px;
       padding: 15px 16px;
       font-size: 16px;
       margin-bottom: 16px;
       outline: none;
     }
 
-    textarea {
-      min-height: 92px;
-      resize: vertical;
-    }
-
-    input:focus,
-    textarea:focus {
+    .input:focus,
+    .textarea:focus {
       border-color: var(--red);
-      box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.12);
+      box-shadow: 0 0 0 4px rgba(217,31,38,0.10);
     }
 
-    .mini-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .mini-stat {
-      padding: 14px;
-      border-radius: 18px;
-      background: #fff;
+    .textarea {
+      width: 100%;
+      min-height: 94px;
+      resize: vertical;
       border: 1px solid var(--border);
-    }
-
-    .mini-stat strong {
-      display: block;
-      font-size: 22px;
-      letter-spacing: -0.04em;
-    }
-
-    .mini-stat span {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      outline: none;
     }
 
     .notice {
       display: none;
+      margin-top: 14px;
       padding: 14px 16px;
-      margin-top: 16px;
-      border-radius: 18px;
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #9a3412;
-      text-align: left;
+      border-radius: 14px;
+      background: #fff8e1;
+      border: 1px solid #f1d27a;
+      color: #7c5a00;
       font-weight: 700;
     }
 
-    .error-box {
-      display: none;
-      padding: 14px 16px;
-      margin-bottom: 18px;
-      border-radius: 18px;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #991b1b;
-      font-weight: 800;
-    }
-
     .loading {
-      margin-top: 12px;
       color: var(--muted);
+      margin-top: 8px;
       font-size: 14px;
     }
 
-    .menu-head {
+    /* KIOSK MENU */
+    .kiosk-page {
+      min-height: 100vh;
+      padding: 18px 18px 110px;
+    }
+
+    .kiosk-shell {
+      max-width: 1220px;
+      margin: 0 auto;
+      background: #f4f4f4;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.08);
+    }
+
+    .kiosk-header {
+      background: linear-gradient(90deg, var(--yellow), #ffd84d);
+      min-height: 88px;
+      padding: 12px 20px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 18px;
     }
 
-    .menu-title {
-      padding: 26px;
-      margin-bottom: 18px;
-      background:
-        radial-gradient(circle at top right, rgba(255,199,44,0.35), transparent 30%),
-        #ffffff;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
     }
 
-    .name-chip {
+    .header-foods {
+      display: flex;
+      gap: 10px;
+      font-size: 36px;
+      flex-wrap: wrap;
+    }
+
+    .header-title-block {
+      min-width: 0;
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: #5b4a00;
+      margin-top: 4px;
+    }
+
+    .search-box {
+      min-width: 210px;
+      max-width: 260px;
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      border: 2px solid rgba(0,0,0,0.15);
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box input {
+      border: 0;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .kiosk-content {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 0;
+      min-height: 620px;
+    }
+
+    .category-rail {
+      background: #fbfbfb;
+      border-right: 1px solid var(--border);
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .category-btn {
+      width: 62px;
+      min-height: 62px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      transition: .15s ease;
+      padding: 4px;
+    }
+
+    .category-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .category-btn.active {
+      border: 2px solid var(--yellow-dark);
+      box-shadow: 0 0 0 2px rgba(255,203,5,0.22);
+    }
+
+    .menu-area {
+      padding: 16px;
+    }
+
+    .menu-area-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .menu-area h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .customer-chip {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      width: fit-content;
-      padding: 9px 13px;
       border-radius: 999px;
-      background: #f3f4f6;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 800;
       color: #374151;
-      font-weight: 850;
     }
 
-    .order-layout {
+    .product-grid {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 18px;
-      align-items: start;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 12px;
     }
 
-    .note-card {
-      padding: 20px;
-      position: sticky;
-      top: 94px;
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(210px, 1fr));
-      gap: 16px;
-    }
-
-    .meal-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-height: 285px;
-      padding: 20px;
+    .product-card {
       background: white;
       border: 2px solid transparent;
-      border-radius: 26px;
-      box-shadow: 0 10px 28px rgba(17, 24, 39, 0.08);
-      overflow: hidden;
-      transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 230px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: .14s ease;
     }
 
-    .meal-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(215, 25, 32, 0.35);
-      box-shadow: 0 18px 42px rgba(17, 24, 39, 0.13);
+    .product-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
     }
 
-    .meal-icon {
-      width: 72px;
-      height: 72px;
+    .product-card.selected {
+      border-color: var(--yellow-dark);
+      box-shadow: 0 0 0 3px rgba(255,203,5,0.20);
+    }
+
+    .product-visual {
+      height: 112px;
+      border-radius: 12px;
+      background: #fafafa;
       display: grid;
       place-items: center;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #fff7ed, #ffedd5);
-      font-size: 42px;
-      margin-bottom: 16px;
+      font-size: 64px;
+      margin-bottom: 14px;
     }
 
-    .meal-title {
-      font-size: 22px;
-      line-height: 1.08;
-      font-weight: 950;
-      letter-spacing: -0.05em;
+    .product-name {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
+      min-height: 38px;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--muted);
+      flex: 1;
       margin-bottom: 10px;
     }
 
-    .meal-desc {
-      flex: 1;
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 14px;
-      margin-bottom: 16px;
+    .product-price {
+      font-size: 18px;
+      font-weight: 900;
     }
 
-    .meal-bottom {
+    .bottom-order-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      background: white;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -8px 20px rgba(0,0,0,0.06);
+    }
+
+    .bottom-order-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+    }
+
+    .order-mini-strip {
+      background: var(--yellow);
+      color: #3d2b00;
+      font-weight: 800;
+      font-size: 14px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-top: auto;
+      padding: 10px 14px;
+      border-radius: 10px 10px 0 0;
     }
 
-    .meal-price {
-      font-size: 22px;
-      font-weight: 950;
-      letter-spacing: -0.04em;
-      white-space: nowrap;
+    .order-panel {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+      padding-top: 12px;
+    }
+
+    .selected-summary {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .selected-summary-emoji {
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .selected-summary-title {
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .selected-summary-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .note-wrap {
+      min-width: 0;
+    }
+
+    .note-wrap textarea {
+      min-height: 68px;
+      margin: 0;
     }
 
     .thanks-card,
-    .login-card {
-      max-width: 560px;
-      margin: 54px auto;
-      padding: 30px;
+    .admin-login-card {
+      max-width: 720px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .thanks-top,
+    .admin-login-top {
+      background: linear-gradient(90deg, var(--yellow), #ffd84d);
+      padding: 24px;
+    }
+
+    .thanks-body,
+    .admin-login-body {
+      padding: 24px;
       text-align: center;
     }
 
-    .big-icon {
-      width: 92px;
-      height: 92px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 18px;
-      border-radius: 32px;
-      background: #ecfdf5;
-      font-size: 48px;
+    .big-emoji {
+      font-size: 56px;
+      margin-bottom: 8px;
     }
 
     .success-box {
-      padding: 16px;
-      border-radius: 18px;
       background: #ecfdf5;
       border: 1px solid #bbf7d0;
       color: #166534;
-      font-weight: 850;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-weight: 800;
       margin: 18px 0;
     }
 
-    .admin-grid {
+    /* ADMIN */
+    .admin-page {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    .admin-layout {
       display: grid;
-      grid-template-columns: 350px 1fr;
-      gap: 18px;
-      align-items: start;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
     }
 
-    .admin-side {
-      padding: 22px;
-      position: sticky;
-      top: 94px;
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
     }
 
-    .admin-main {
-      padding: 22px;
+    .panel-side {
+      padding: 18px;
+    }
+
+    .panel-main {
+      padding: 18px;
+    }
+
+    .panel-title {
+      margin: 0 0 12px;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .meta-chip {
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      color: #4b5563;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
     }
 
     .admin-kpis {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      margin: 16px 0;
+      margin: 14px 0 18px;
     }
 
     .kpi {
-      border-radius: 20px;
-      background: #f9fafb;
+      background: #fafafa;
       border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 14px;
     }
 
     .kpi strong {
       display: block;
       font-size: 28px;
+      font-weight: 900;
       letter-spacing: -0.05em;
     }
 
     .kpi span {
-      display: block;
-      color: var(--muted);
       font-size: 12px;
-      font-weight: 750;
-      margin-top: 2px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
     .summary-list {
       display: grid;
       gap: 10px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .summary-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 18px;
+      gap: 10px;
       background: white;
       border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
     }
 
-    .summary-name {
+    .summary-item-left {
       display: flex;
       align-items: center;
       gap: 10px;
       min-width: 0;
-      font-weight: 850;
-    }
-
-    .summary-name span:last-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 800;
     }
 
     .pill {
+      min-width: 32px;
+      height: 32px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      padding: 0 11px;
+      padding: 0 10px;
       background: var(--red);
       color: white;
-      font-weight: 950;
+      font-weight: 900;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      min-width: 920px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 12px;
     }
 
     .status {
@@ -600,7 +714,7 @@
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 950;
+      font-weight: 900;
       white-space: nowrap;
     }
 
@@ -619,301 +733,256 @@
       color: #166534;
     }
 
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      background: white;
-    }
-
-    table {
-      width: 100%;
-      min-width: 880px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 14px 12px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
-    }
-
-    th {
-      background: #f9fafb;
-      color: #374151;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 12px;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .order-meal {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-weight: 900;
-    }
-
-    .order-emoji {
-      font-size: 24px;
-      line-height: 1;
-    }
-
     .order-actions {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
     }
 
-    .admin-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-bottom: 16px;
-    }
-
-    .meta {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 14px 0;
-    }
-
-    .meta-chip {
-      display: inline-flex;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: #f3f4f6;
-      border: 1px solid var(--border);
+    .muted {
       color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
     }
 
-    @media (max-width: 1040px) {
-      .hero,
-      .order-layout,
-      .admin-grid {
+    @media (max-width: 1080px) {
+      .product-grid {
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+      }
+
+      .admin-layout {
         grid-template-columns: 1fr;
       }
 
-      .note-card,
-      .admin-side {
-        position: static;
-      }
-
-      .menu-grid {
-        grid-template-columns: repeat(2, minmax(210px, 1fr));
+      .order-panel {
+        grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 640px) {
-      .app {
-        padding: 12px;
+    @media (max-width: 820px) {
+      .kiosk-content {
+        grid-template-columns: 1fr;
       }
 
-      .topbar {
-        margin: -12px -12px 16px;
-        padding: 12px;
-        align-items: flex-start;
+      .category-rail {
+        flex-direction: row;
+        overflow-x: auto;
+        justify-content: flex-start;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+      }
+
+      .kiosk-header {
         flex-direction: column;
+        align-items: flex-start;
       }
 
-      .brand-logo {
-        width: 44px;
-        height: 44px;
+      .search-box {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .top-actions {
+        left: 12px;
+        right: 12px;
+        justify-content: space-between;
       }
 
-      .brand-title {
-        font-size: 20px;
-      }
-
-      .top-actions,
       .top-actions .btn {
-        width: 100%;
+        flex: 1;
       }
 
-      .hero-main,
-      .start-box,
-      .menu-title,
-      .thanks-card,
-      .login-card,
-      .admin-side,
-      .admin-main {
+      .welcome-body,
+      .thanks-body,
+      .admin-login-body {
         padding: 18px;
       }
 
-      .hero-main {
-        min-height: auto;
+      .welcome-hero,
+      .thanks-top,
+      .admin-login-top {
+        padding: 18px;
       }
 
-      h1 {
-        font-size: 40px;
-      }
-
-      .mini-stats,
-      .admin-kpis,
-      .menu-grid {
+      .product-grid {
         grid-template-columns: 1fr;
       }
 
-      .meal-bottom {
-        align-items: stretch;
-        flex-direction: column;
+      .kiosk-page,
+      .admin-page {
+        padding-left: 10px;
+        padding-right: 10px;
       }
 
-      .meal-bottom .btn,
-      .btn {
-        width: 100%;
-      }
-
-      .order-actions .btn {
-        width: auto;
-      }
-
-      .admin-toolbar .btn {
-        width: auto;
+      .bottom-order-inner {
+        padding-left: 10px;
+        padding-right: 10px;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-logo">🍔</div>
-        <div>
-          <div class="brand-title">Naručivanje hrane</div>
-          <div class="brand-subtitle">Dnevni meni · brzo naručivanje · admin lista</div>
-        </div>
-      </div>
+  <div class="top-actions">
+    <button class="btn btn-light" onclick="goHome()">Početak</button>
+    <button class="btn btn-dark" onclick="openAdminLogin()">Admin</button>
+  </div>
 
-      <div class="top-actions">
-        <button class="btn btn-light" onclick="goHome()">Početak</button>
-        <button class="btn btn-dark" onclick="openAdminLogin()">Admin</button>
-      </div>
-    </header>
+  <div id="globalError" class="error-box"></div>
 
-    <div id="globalError" class="error-box"></div>
-
-    <section id="screenName" class="screen active">
-      <div class="hero">
-        <div class="card hero-main">
-          <div class="eyebrow">🔥 Današnji izbor</div>
-          <h1>Odaberi svoj obrok.</h1>
-          <p class="hero-text">
-            Upiši ime, izaberi jedno od današnjih jela i narudžba odmah ide na admin listu za pripremu.
-          </p>
-
-          <div class="mini-stats">
-            <div class="mini-stat">
-              <strong id="menuCount">0</strong>
-              <span>aktivnih jela</span>
+  <!-- NAME SCREEN -->
+  <section id="screenName" class="screen active">
+    <div class="welcome-wrap">
+      <div class="welcome-card">
+        <div class="welcome-hero">
+          <div>
+            <h1 class="welcome-title">Odaberi svoj obrok</h1>
+            <div class="welcome-subtitle">
+              Upiši ime i nastavi na kiosk ekran za odabir današnjeg jela.
             </div>
-            <div class="mini-stat">
-              <strong>1</strong>
-              <span>klik za narudžbu</span>
-            </div>
-            <div class="mini-stat">
-              <strong>✅</strong>
-              <span>lista za kuhinju</span>
-            </div>
+          </div>
+
+          <div class="welcome-icons" aria-hidden="true">
+            <span>🍟</span>
+            <span>🍦</span>
+            <span>🍗</span>
+            <span>🍔</span>
           </div>
         </div>
 
-        <div class="card start-box">
-          <h2>Krenimo</h2>
-          <p class="muted">
-            Upiši ime i prezime kako bi narudžba bila jasno označena.
-          </p>
+        <div class="welcome-body">
+          <label class="field-label" for="customerName">Ime i prezime</label>
+          <input id="customerName" class="input" type="text" placeholder="npr. Ivan Horvat" autocomplete="off" />
 
-          <label for="customerName">Ime i prezime</label>
-          <input id="customerName" type="text" placeholder="npr. Ivan Horvat" autocomplete="off" />
-
-          <button id="continueBtn" class="btn" onclick="continueToMenu()">Nastavi na odabir jela</button>
+          <button id="continueBtn" class="btn btn-primary" onclick="continueToMenu()">Nastavi na odabir jela</button>
 
           <div id="menuLoading" class="loading">Učitavam današnji meni...</div>
 
           <div id="noMenuNotice" class="notice">
-            Meni trenutno nije dostupan. Provjeri Google Sheet tab <strong>Menu</strong> i stupac <strong>aktivno = DA</strong>.
+            Meni trenutno nije dostupan. Provjeri Google Sheet tab <strong>Menu</strong> i vrijednosti <strong>aktivno = DA</strong>.
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="screenMenu" class="screen">
-      <div class="card menu-title">
-        <div class="menu-head">
-          <div>
-            <div class="eyebrow">🍽️ Odabir jela</div>
-            <h1>Današnji meni</h1>
-            <div class="name-chip">👤 <span id="customerNamePreview"></span></div>
+  <!-- MENU SCREEN -->
+  <section id="screenMenu" class="screen">
+    <div class="kiosk-page">
+      <div class="kiosk-shell">
+        <div class="kiosk-header">
+          <div class="header-left">
+            <div class="header-foods" aria-hidden="true">
+              <span>🍟</span>
+              <span>🍦</span>
+              <span>🍗</span>
+              <span>🍔</span>
+            </div>
+
+            <div class="header-title-block">
+              <h2 class="header-title">Današnji meni</h2>
+              <div class="header-sub">Brz i jednostavan odabir obroka</div>
+            </div>
           </div>
-          <button class="btn btn-light" onclick="goHome()">Promijeni ime</button>
+
+          <div class="search-box">
+            <input id="menuSearch" type="text" placeholder="Pretraži jela" />
+            <span>🔍</span>
+          </div>
+        </div>
+
+        <div class="kiosk-content">
+          <aside id="categoryRail" class="category-rail"></aside>
+
+          <main class="menu-area">
+            <div class="menu-area-top">
+              <h1>Odaberi jelo</h1>
+              <div class="customer-chip">👤 <span id="customerNamePreview"></span></div>
+            </div>
+
+            <div id="productGrid" class="product-grid"></div>
+          </main>
         </div>
       </div>
+    </div>
 
-      <div class="order-layout">
-        <aside class="card note-card">
-          <h2>Napomena</h2>
-          <p class="muted">
-            Ovdje upiši posebnu želju ako postoji.
-          </p>
+    <div class="bottom-order-bar">
+      <div class="bottom-order-inner">
+        <div class="order-mini-strip">
+          <span id="selectedCountText">0 odabranih jela</span>
+          <span>Klikni na jelo pa potvrdi narudžbu</span>
+        </div>
 
-          <label for="orderNote">Napomena uz narudžbu</label>
-          <textarea id="orderNote" placeholder="npr. bez luka, bez majoneze, dodatni umak..."></textarea>
-
-          <div class="notice" style="display:block;">
-            Odaberi jedno jelo. Nakon potvrde narudžba se odmah sprema u admin listu.
+        <div class="order-panel">
+          <div id="selectedSummary" class="selected-summary">
+            <div class="selected-summary-emoji">🍽️</div>
+            <div>
+              <div class="selected-summary-title">Još nije odabrano jelo</div>
+              <div class="selected-summary-sub">Odaberi jednu stavku iz menija</div>
+            </div>
           </div>
-        </aside>
 
-        <main>
-          <div id="menuGrid" class="menu-grid"></div>
-        </main>
+          <div class="note-wrap">
+            <textarea id="orderNote" class="textarea" placeholder="Napomena: npr. bez određenog sastojka, dodati određeni sastojak..."></textarea>
+          </div>
+
+          <button class="btn btn-light" onclick="goHome()">Odustani</button>
+          <button id="submitOrderBtn" class="btn btn-green" onclick="submitSelectedOrder()" disabled>Dodaj narudžbu</button>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="screenThanks" class="screen">
-      <div class="card thanks-card">
-        <div class="big-icon">✅</div>
-        <h1>Hvala!</h1>
+  <!-- THANKS SCREEN -->
+  <section id="screenThanks" class="screen">
+    <div class="welcome-wrap">
+      <div class="thanks-card">
+        <div class="thanks-top">
+          <div class="big-emoji">✅</div>
+          <h2 style="margin:0;font-size:34px;font-weight:900;letter-spacing:-0.05em;">Narudžba zaprimljena</h2>
+        </div>
 
-        <div class="success-box">Narudžba je zaprimljena.</div>
+        <div class="thanks-body">
+          <div class="success-box">Hvala! Tvoja narudžba je uspješno spremljena.</div>
+          <p id="orderConfirmation" class="muted"></p>
 
-        <p id="orderConfirmation" class="muted"></p>
-
-        <button class="btn" onclick="resetForNextCustomer()">Nova narudžba</button>
+          <button class="btn btn-primary" onclick="resetForNextCustomer()">Nova narudžba</button>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="screenAdminLogin" class="screen">
-      <div class="card login-card">
-        <div class="big-icon" style="background:#f3f4f6;">🔐</div>
-        <h1>Admin prijava</h1>
-        <p class="muted">Upiši admin PIN za pregled narudžbi.</p>
+  <!-- ADMIN LOGIN -->
+  <section id="screenAdminLogin" class="screen">
+    <div class="welcome-wrap">
+      <div class="admin-login-card">
+        <div class="admin-login-top">
+          <div class="big-emoji">🔐</div>
+          <h2 style="margin:0;font-size:34px;font-weight:900;letter-spacing:-0.05em;">Admin prijava</h2>
+        </div>
 
-        <label for="adminPin">Admin PIN</label>
-        <input id="adminPin" type="password" placeholder="PIN" autocomplete="off" />
+        <div class="admin-login-body">
+          <p class="muted">Upiši admin PIN za pregled liste narudžbi.</p>
 
-        <button class="btn btn-dark" onclick="adminLogin()">Uđi u admin</button>
+          <label class="field-label" for="adminPin">Admin PIN</label>
+          <input id="adminPin" class="input" type="password" placeholder="PIN" autocomplete="off" />
+
+          <button class="btn btn-dark" onclick="adminLogin()">Uđi u admin</button>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="screenAdmin" class="screen">
-      <div class="admin-grid">
-        <aside class="card admin-side">
-          <h2>Admin panel</h2>
+  <!-- ADMIN -->
+  <section id="screenAdmin" class="screen">
+    <div class="admin-page">
+      <div class="admin-layout">
+        <aside class="panel panel-side">
+          <h2 class="panel-title">Admin panel</h2>
 
-          <div class="meta">
+          <div class="meta-row">
             <span class="meta-chip" id="adminLastRefresh">Zadnje osvježenje: -</span>
             <span class="meta-chip" id="adminTotalOrders">Narudžbe: 0</span>
           </div>
@@ -929,31 +998,22 @@
             </div>
           </div>
 
-          <div class="admin-toolbar">
-            <button class="btn btn-small" onclick="loadAdminOrders()">Osvježi</button>
+          <div class="toolbar">
+            <button class="btn btn-primary btn-small" onclick="loadAdminOrders()">Osvježi</button>
             <button class="btn btn-green btn-small" onclick="exportCsv()">CSV</button>
             <button class="btn btn-danger btn-small" onclick="clearOrders()">Obriši sve</button>
           </div>
 
-          <hr style="border:0;border-top:1px solid var(--border);margin:20px 0;">
-
           <h3>Sažetak za izradu</h3>
-          <p class="muted" style="margin-top:-5px;">
-            Broje se samo narudžbe koje nisu označene kao gotovo.
-          </p>
+          <p class="muted" style="margin-top:-4px;">Broje se samo narudžbe koje nisu označene kao gotovo.</p>
           <div id="summaryList" class="summary-list"></div>
 
           <h3>Trenutni meni</h3>
           <div id="adminMenuList" class="summary-list"></div>
         </aside>
 
-        <main class="card admin-main">
-          <div class="menu-head">
-            <div>
-              <div class="eyebrow">👨‍🍳 Kuhinjska lista</div>
-              <h1>Lista narudžbi</h1>
-            </div>
-          </div>
+        <main class="panel panel-main">
+          <h2 class="panel-title">Lista narudžbi</h2>
 
           <div class="table-wrap">
             <table>
@@ -976,8 +1036,8 @@
           </div>
         </main>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
   <script>
     const CONFIG = {
@@ -990,7 +1050,9 @@
       orders: [],
       customerName: "",
       adminPin: "",
-      adminTimer: null
+      adminTimer: null,
+      selectedMenuId: "",
+      menuSearch: ""
     };
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -1006,6 +1068,11 @@
         if (event.key === "Enter") {
           adminLogin();
         }
+      });
+
+      document.getElementById("menuSearch").addEventListener("input", function(event) {
+        state.menuSearch = event.target.value.trim().toLowerCase();
+        renderPublicMenu();
       });
     });
 
@@ -1066,6 +1133,8 @@
       if (id !== "screenAdmin") {
         stopAdminAutoRefresh();
       }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function showError(message) {
@@ -1081,6 +1150,7 @@
     }
 
     function goHome() {
+      state.selectedMenuId = "";
       showScreen("screenName");
       document.getElementById("customerName").focus();
       renderMenuAvailability();
@@ -1096,11 +1166,13 @@
         state.menu = data.menu || [];
 
         renderMenuAvailability();
+        renderCategoryRail();
 
       } catch (err) {
         showError(err.message);
         state.menu = [];
         renderMenuAvailability();
+        renderCategoryRail();
 
       } finally {
         loading.style.display = "none";
@@ -1110,14 +1182,12 @@
     function renderMenuAvailability() {
       const notice = document.getElementById("noMenuNotice");
       const continueBtn = document.getElementById("continueBtn");
-      const menuCount = document.getElementById("menuCount");
-
-      menuCount.textContent = state.menu.length;
 
       if (!state.menu.length) {
         notice.style.display = "block";
         continueBtn.disabled = true;
       } else {
+        notice.style.display = "block";
         notice.style.display = "none";
         continueBtn.disabled = false;
       }
@@ -1139,61 +1209,132 @@
       }
 
       state.customerName = name;
+      state.selectedMenuId = "";
       document.getElementById("customerNamePreview").textContent = name;
       document.getElementById("orderNote").value = "";
+      document.getElementById("menuSearch").value = "";
+      state.menuSearch = "";
 
+      renderCategoryRail();
       renderPublicMenu();
+      updateSelectedSummary();
+
       showScreen("screenMenu");
     }
 
-    function renderPublicMenu() {
-      const grid = document.getElementById("menuGrid");
-      grid.innerHTML = "";
+    function renderCategoryRail() {
+      const rail = document.getElementById("categoryRail");
+      rail.innerHTML = "";
+
+      if (!state.menu.length) return;
 
       state.menu.forEach(function(item) {
+        const btn = document.createElement("button");
+        btn.className = "category-btn" + (state.selectedMenuId === item.id ? " active" : "");
+        btn.title = item.name;
+        btn.innerHTML = getMealEmoji(item.name);
+        btn.onclick = function() {
+          selectMeal(item.id);
+        };
+        rail.appendChild(btn);
+      });
+    }
+
+    function renderPublicMenu() {
+      const grid = document.getElementById("productGrid");
+      grid.innerHTML = "";
+
+      const visibleMenu = state.menu.filter(function(item) {
+        if (!state.menuSearch) return true;
+
+        const haystack = (
+          String(item.name || "") + " " + String(item.description || "")
+        ).toLowerCase();
+
+        return haystack.includes(state.menuSearch);
+      });
+
+      if (!visibleMenu.length) {
+        grid.innerHTML = `
+          <div style="grid-column:1/-1;background:white;border:1px solid var(--border);border-radius:14px;padding:20px;">
+            Nema rezultata za ovu pretragu.
+          </div>
+        `;
+        return;
+      }
+
+      visibleMenu.forEach(function(item) {
         const card = document.createElement("div");
-        card.className = "meal-card";
-
-        const icon = document.createElement("div");
-        icon.className = "meal-icon";
-        icon.textContent = getMealEmoji(item.name);
-
-        const title = document.createElement("div");
-        title.className = "meal-title";
-        title.textContent = item.name || "";
-
-        const desc = document.createElement("div");
-        desc.className = "meal-desc";
-        desc.textContent = item.description || "Bez dodatnog opisa.";
-
-        const bottom = document.createElement("div");
-        bottom.className = "meal-bottom";
-
-        const price = document.createElement("div");
-        price.className = "meal-price";
-        price.textContent = item.price || "";
-
-        const button = document.createElement("button");
-        button.className = "btn";
-        button.textContent = "Odaberi";
-        button.onclick = function() {
-          submitOrder(item.id, button);
+        card.className = "product-card" + (state.selectedMenuId === item.id ? " selected" : "");
+        card.onclick = function() {
+          selectMeal(item.id);
         };
 
-        bottom.appendChild(price);
-        bottom.appendChild(button);
-
-        card.appendChild(icon);
-        card.appendChild(title);
-        card.appendChild(desc);
-        card.appendChild(bottom);
+        card.innerHTML = `
+          <div class="product-visual">${escapeHtml(getMealEmoji(item.name))}</div>
+          <div class="product-name">${escapeHtml(item.name || "")}</div>
+          <div class="product-desc">${escapeHtml(item.description || "Bez dodatnog opisa.")}</div>
+          <div class="product-price">${escapeHtml(item.price || "")}</div>
+        `;
 
         grid.appendChild(card);
       });
     }
 
-    async function submitOrder(menuId, button) {
+    function selectMeal(menuId) {
+      state.selectedMenuId = menuId;
+      renderCategoryRail();
+      renderPublicMenu();
+      updateSelectedSummary();
+    }
+
+    function updateSelectedSummary() {
+      const selected = state.menu.find(function(item) {
+        return String(item.id) === String(state.selectedMenuId);
+      });
+
+      const summary = document.getElementById("selectedSummary");
+      const submitBtn = document.getElementById("submitOrderBtn");
+      const selectedCountText = document.getElementById("selectedCountText");
+
+      if (!selected) {
+        selectedCountText.textContent = "0 odabranih jela";
+        submitBtn.disabled = true;
+
+        summary.innerHTML = `
+          <div class="selected-summary-emoji">🍽️</div>
+          <div>
+            <div class="selected-summary-title">Još nije odabrano jelo</div>
+            <div class="selected-summary-sub">Odaberi jednu stavku iz menija</div>
+          </div>
+        `;
+        return;
+      }
+
+      selectedCountText.textContent = "1 odabrano jelo";
+      submitBtn.disabled = false;
+
+      summary.innerHTML = `
+        <div class="selected-summary-emoji">${escapeHtml(getMealEmoji(selected.name))}</div>
+        <div>
+          <div class="selected-summary-title">${escapeHtml(selected.name)}</div>
+          <div class="selected-summary-sub">${escapeHtml(selected.price || "")}</div>
+        </div>
+      `;
+    }
+
+    async function submitSelectedOrder() {
+      const selected = state.menu.find(function(item) {
+        return String(item.id) === String(state.selectedMenuId);
+      });
+
+      if (!selected) {
+        alert("Prvo odaberi jelo.");
+        return;
+      }
+
       const note = document.getElementById("orderNote").value.trim();
+      const button = document.getElementById("submitOrderBtn");
 
       try {
         button.disabled = true;
@@ -1201,7 +1342,7 @@
 
         const data = await apiCall("createOrder", {
           name: state.customerName,
-          menuId: menuId,
+          menuId: selected.id,
           note: note
         });
 
@@ -1214,13 +1355,16 @@
 
       } catch (err) {
         showError(err.message);
-        button.disabled = false;
-        button.textContent = "Odaberi";
+
+      } finally {
+        button.textContent = "Dodaj narudžbu";
+        updateSelectedSummary();
       }
     }
 
     function resetForNextCustomer() {
       state.customerName = "";
+      state.selectedMenuId = "";
       document.getElementById("customerName").value = "";
       goHome();
     }
@@ -1285,9 +1429,7 @@
           "Narudžbe: " + state.orders.length;
 
       } catch (err) {
-        if (!silent) {
-          showError(err.message);
-        }
+        if (!silent) showError(err.message);
       }
     }
 
@@ -1309,80 +1451,40 @@
       tbody.innerHTML = "";
 
       if (!state.orders.length) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 6;
-        td.textContent = "Još nema narudžbi.";
-        tr.appendChild(td);
-        tbody.appendChild(tr);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6">Još nema narudžbi.</td>
+          </tr>
+        `;
         return;
       }
 
       state.orders.forEach(function(order) {
         const tr = document.createElement("tr");
 
-        tr.appendChild(createCell(order.time));
-        tr.appendChild(createCell(order.name));
-
-        const mealTd = document.createElement("td");
-        mealTd.innerHTML =
-          "<div class='order-meal'>" +
-            "<span class='order-emoji'>" + escapeHtml(getMealEmoji(order.mealName)) + "</span>" +
-            "<div>" +
-              "<div>" + escapeHtml(order.mealName) + "</div>" +
-              "<div class='muted'>" + escapeHtml(order.price || "") + "</div>" +
-            "</div>" +
-          "</div>";
-        tr.appendChild(mealTd);
-
-        tr.appendChild(createCell(order.note));
-
-        const statusTd = document.createElement("td");
-        const status = document.createElement("span");
-        status.className = "status " + statusClass(order.status);
-        status.textContent = order.status || "novo";
-        statusTd.appendChild(status);
-        tr.appendChild(statusTd);
-
-        const actionsTd = document.createElement("td");
-        const actions = document.createElement("div");
-        actions.className = "order-actions";
-
-        const makeBtn = document.createElement("button");
-        makeBtn.className = "btn btn-yellow btn-small";
-        makeBtn.textContent = "U izradi";
-        makeBtn.onclick = function() {
-          changeStatus(order.id, "u izradi");
-        };
-
-        const doneBtn = document.createElement("button");
-        doneBtn.className = "btn btn-green btn-small";
-        doneBtn.textContent = "Gotovo";
-        doneBtn.onclick = function() {
-          changeStatus(order.id, "gotovo");
-        };
-
-        const newBtn = document.createElement("button");
-        newBtn.className = "btn btn-light btn-small";
-        newBtn.textContent = "Novo";
-        newBtn.onclick = function() {
-          changeStatus(order.id, "novo");
-        };
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.className = "btn btn-danger btn-small";
-        deleteBtn.textContent = "Obriši";
-        deleteBtn.onclick = function() {
-          deleteOrder(order.id);
-        };
-
-        actions.appendChild(makeBtn);
-        actions.appendChild(doneBtn);
-        actions.appendChild(newBtn);
-        actions.appendChild(deleteBtn);
-
-        actionsTd.appendChild(actions);
-        tr.appendChild(actionsTd);
+        tr.innerHTML = `
+          <td>${escapeHtml(order.time || "")}</td>
+          <td>${escapeHtml(order.name || "")}</td>
+          <td>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="font-size:24px;line-height:1;">${escapeHtml(getMealEmoji(order.mealName))}</span>
+              <div>
+                <div style="font-weight:800;">${escapeHtml(order.mealName || "")}</div>
+                <div class="muted">${escapeHtml(order.price || "")}</div>
+              </div>
+            </div>
+          </td>
+          <td>${escapeHtml(order.note || "")}</td>
+          <td><span class="status ${statusClass(order.status)}">${escapeHtml(order.status || "novo")}</span></td>
+          <td>
+            <div class="order-actions">
+              <button class="btn btn-yellow btn-small" onclick="changeStatus('${escapeJs(order.id)}','u izradi')">U izradi</button>
+              <button class="btn btn-green btn-small" onclick="changeStatus('${escapeJs(order.id)}','gotovo')">Gotovo</button>
+              <button class="btn btn-light btn-small" onclick="changeStatus('${escapeJs(order.id)}','novo')">Novo</button>
+              <button class="btn btn-danger btn-small" onclick="deleteOrder('${escapeJs(order.id)}')">Obriši</button>
+            </div>
+          </td>
+        `;
 
         tbody.appendChild(tr);
       });
@@ -1392,9 +1494,7 @@
       const summary = {};
 
       state.orders.forEach(function(order) {
-        if (order.status === "gotovo") {
-          return;
-        }
+        if (order.status === "gotovo") return;
 
         const meal = order.mealName || "Nepoznato jelo";
         summary[meal] = (summary[meal] || 0) + 1;
@@ -1408,7 +1508,7 @@
       });
 
       if (!entries.length) {
-        list.innerHTML = "<div class='muted'>Trenutno nema aktivnih narudžbi za izradu.</div>";
+        list.innerHTML = `<div class="muted">Trenutno nema aktivnih narudžbi za izradu.</div>`;
         return;
       }
 
@@ -1418,13 +1518,13 @@
 
         const item = document.createElement("div");
         item.className = "summary-item";
-        item.innerHTML =
-          "<div class='summary-name'>" +
-            "<span>" + escapeHtml(getMealEmoji(meal)) + "</span>" +
-            "<span>" + escapeHtml(meal) + "</span>" +
-          "</div>" +
-          "<span class='pill'>" + count + "</span>";
-
+        item.innerHTML = `
+          <div class="summary-item-left">
+            <span style="font-size:22px;">${escapeHtml(getMealEmoji(meal))}</span>
+            <span>${escapeHtml(meal)}</span>
+          </div>
+          <span class="pill">${count}</span>
+        `;
         list.appendChild(item);
       });
     }
@@ -1434,20 +1534,20 @@
       list.innerHTML = "";
 
       if (!state.menu.length) {
-        list.innerHTML = "<div class='muted'>Meni nije učitan.</div>";
+        list.innerHTML = `<div class="muted">Meni nije učitan.</div>`;
         return;
       }
 
       state.menu.forEach(function(item) {
         const div = document.createElement("div");
         div.className = "summary-item";
-        div.innerHTML =
-          "<div class='summary-name'>" +
-            "<span>" + escapeHtml(getMealEmoji(item.name)) + "</span>" +
-            "<span>" + escapeHtml(item.name) + "</span>" +
-          "</div>" +
-          "<strong>" + escapeHtml(item.price || "") + "</strong>";
-
+        div.innerHTML = `
+          <div class="summary-item-left">
+            <span style="font-size:22px;">${escapeHtml(getMealEmoji(item.name))}</span>
+            <span>${escapeHtml(item.name)}</span>
+          </div>
+          <strong>${escapeHtml(item.price || "")}</strong>
+        `;
         list.appendChild(div);
       });
     }
@@ -1461,16 +1561,13 @@
         });
 
         await loadAdminOrders(true);
-
       } catch (err) {
         showError(err.message);
       }
     }
 
     async function deleteOrder(id) {
-      if (!confirm("Obrisati ovu narudžbu?")) {
-        return;
-      }
+      if (!confirm("Obrisati ovu narudžbu?")) return;
 
       try {
         await apiCall("deleteOrder", {
@@ -1479,16 +1576,13 @@
         });
 
         await loadAdminOrders(true);
-
       } catch (err) {
         showError(err.message);
       }
     }
 
     async function clearOrders() {
-      if (!confirm("Obrisati sve narudžbe? Ovo ne možeš poništiti.")) {
-        return;
-      }
+      if (!confirm("Obrisati sve narudžbe? Ovo ne možeš poništiti.")) return;
 
       try {
         await apiCall("clearOrders", {
@@ -1500,7 +1594,6 @@
         renderAdminOrders();
         renderSummary();
         renderKpis();
-
       } catch (err) {
         showError(err.message);
       }
@@ -1537,11 +1630,9 @@
 
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-
       a.href = url;
       a.download = "narudzbe_hrane.csv";
       a.click();
-
       URL.revokeObjectURL(url);
     }
 
@@ -1561,25 +1652,13 @@
       if (n.includes("tjesten") || n.includes("pasta")) return "🍝";
       if (n.includes("riž") || n.includes("rice")) return "🍚";
       if (n.includes("juha")) return "🥣";
-
+      if (n.includes("sladoled") || n.includes("ice") || n.includes("sundae")) return "🍦";
       return "🍽️";
     }
 
-    function createCell(text) {
-      const td = document.createElement("td");
-      td.textContent = text || "";
-      return td;
-    }
-
     function statusClass(status) {
-      if (status === "gotovo") {
-        return "status-done";
-      }
-
-      if (status === "u izradi") {
-        return "status-making";
-      }
-
+      if (status === "gotovo") return "status-done";
+      if (status === "u izradi") return "status-making";
       return "status-new";
     }
 
@@ -1590,6 +1669,10 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+    }
+
+    function escapeJs(value) {
+      return String(value || "").replaceAll("\\", "\\\\").replaceAll("'", "\\'");
     }
 
     function csvEscape(value) {
