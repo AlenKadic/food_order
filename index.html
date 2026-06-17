@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Naručivanje hrane</title>
+
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #d71920;
+      --primary-dark: #b9151b;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --blue: #2563eb;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .brand-title {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .center-card {
+      max-width: 560px;
+      margin: 56px auto;
+      text-align: center;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font: inherit;
+      font-size: 16px;
+      background: white;
+      margin-bottom: 16px;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 18px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    button.secondary {
+      background: #374151;
+    }
+
+    button.light {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    button.success {
+      background: var(--success);
+    }
+
+    button.warning {
+      background: var(--warning);
+      color: #111827;
+    }
+
+    button.danger {
+      background: var(--danger);
+    }
+
+    button.small-btn {
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-row.left {
+      justify-content: flex-start;
+    }
+
+    .notice {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      margin: 14px 0;
+      text-align: left;
+    }
+
+    .success-box {
+      padding: 16px;
+      border-radius: 14px;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      font-weight: 700;
+      margin: 18px 0;
+    }
+
+    .error-box {
+      padding: 16px;
+      border-radius: 14px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      font-weight: 700;
+      margin: 18px 0;
+      text-align: left;
+      display: none;
+    }
+
+    .loading {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .meal-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      min-height: 245px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meal-title {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .meal-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .meal-price {
+      font-size: 19px;
+      font-weight: 900;
+      margin: 14px 0;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: white;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      padding: 0 10px;
+      font-weight: 900;
+      background: var(--primary);
+      color: white;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-new {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-making {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-done {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      min-width: 850px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f9fafb;
+      color: #374151;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        padding: 14px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .center-card {
+        margin: 22px auto;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .order-actions button,
+      .topbar button,
+      .btn-row.left button {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <div class="brand-title">Naručivanje hrane</div>
+        <div class="brand-subtitle">Dnevni meni · narudžbe u stvarnom vremenu</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="light" onclick="goHome()">Početak</button>
+        <button class="secondary" onclick="openAdminLogin()">Admin</button>
+      </div>
+    </header>
+
+    <div id="globalError" class="error-box"></div>
+
+    <section id="screenName" class="screen active">
+      <div class="card center-card">
+        <h1>Dobrodošli</h1>
+        <p class="muted">Upišite ime i prezime, zatim odaberite današnji obrok.</p>
+
+        <label for="customerName">Ime i prezime</label>
+        <input id="customerName" type="text" placeholder="npr. Ivan Horvat" autocomplete="off" />
+
+        <button id="continueBtn" onclick="continueToMenu()">Nastavi na odabir jela</button>
+
+        <div id="menuLoading" class="loading">Učitavam današnji meni...</div>
+
+        <div id="noMenuNotice" class="notice" style="display:none;">
+          Meni trenutno nije dostupan. Admin treba upisati aktivna jela u Google Sheet.
+        </div>
+      </div>
+    </section>
+
+    <section id="screenMenu" class="screen">
+      <div class="card">
+        <h1>Odaberi jelo</h1>
+        <p class="muted">Narudžba za: <strong id="customerNamePreview"></strong></p>
+
+        <label for="orderNote">Napomena</label>
+        <textarea id="orderNote" placeholder="npr. bez luka, bez majoneze, dodatni umak..."></textarea>
+
+        <div id="menuGrid" class="menu-grid"></div>
+      </div>
+    </section>
+
+    <section id="screenThanks" class="screen">
+      <div class="card center-card">
+        <h1>Hvala!</h1>
+
+        <div class="success-box">Narudžba je zaprimljena.</div>
+
+        <p id="orderConfirmation" class="muted"></p>
+
+        <button onclick="resetForNextCustomer()">Nova narudžba</button>
+      </div>
+    </section>
+
+    <section id="screenAdminLogin" class="screen">
+      <div class="card center-card">
+        <h1>Admin prijava</h1>
+        <p class="muted">Upiši admin PIN za pregled narudžbi.</p>
+
+        <label for="adminPin">Admin PIN</label>
+        <input id="adminPin" type="password" placeholder="PIN" autocomplete="off" />
+
+        <button onclick="adminLogin()">Uđi u admin</button>
+      </div>
+    </section>
+
+    <section id="screenAdmin" class="screen">
+      <div class="admin-grid">
+        <aside class="card">
+          <h2>Admin</h2>
+
+          <div>
+            <span class="meta-chip" id="adminLastRefresh">Zadnje osvježenje: -</span>
+            <span class="meta-chip" id="adminTotalOrders">Narudžbe: 0</span>
+          </div>
+
+          <div class="btn-row left">
+            <button onclick="loadAdminOrders()">Osvježi</button>
+            <button class="success" onclick="exportCsv()">Izvezi CSV</button>
+            <button class="danger" onclick="clearOrders()">Obriši sve</button>
+          </div>
+
+          <hr style="border:0;border-top:1px solid var(--border);margin:22px 0;">
+
+          <h3>Sažetak za izradu</h3>
+          <p class="muted" style="margin-top:-6px;">
+            Broje se samo narudžbe koje nisu označene kao gotovo.
+          </p>
+          <div id="summaryList" class="summary-list"></div>
+
+          <h3>Trenutni meni</h3>
+          <div id="adminMenuList" class="summary-list"></div>
+
+          <div class="notice">
+            Meni uređuješ direktno u Google Sheetu, u tabu <strong>Menu</strong>.
+            Aktivno jelo mora imati vrijednost <strong>DA</strong> u stupcu <strong>aktivno</strong>.
+          </div>
+        </aside>
+
+        <main class="card">
+          <h2>Lista narudžbi za izradu</h2>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vrijeme</th>
+                  <th>Ime</th>
+                  <th>Jelo</th>
+                  <th>Napomena</th>
+                  <th>Status</th>
+                  <th>Akcije</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr>
+                  <td colspan="6">Učitavam...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const CONFIG = {
+      API_URL: "https://script.google.com/macros/s/AKfycbyZ8GeUcM9BtYntVy3GCmASAV-vokkau7sRCidxSl_CyluHmGyf90zfGv4EnryfPBYc/exec",
+      ADMIN_REFRESH_MS: 12000
+    };
+
+    const state = {
+      menu: [],
+      orders: [],
+      customerName: "",
+      adminPin: "",
+      adminTimer: null
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      loadMenu();
+
+      document.getElementById("customerName").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          continueToMenu();
+        }
+      });
+
+      document.getElementById("adminPin").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          adminLogin();
+        }
+      });
+    });
+
+    function apiCall(action, params = {}) {
+      return new Promise(function(resolve, reject) {
+        const callbackName = "foodOrderCb_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+
+        const query = new URLSearchParams({
+          action: action,
+          callback: callbackName,
+          ...params
+        });
+
+        const script = document.createElement("script");
+        script.src = CONFIG.API_URL + "?" + query.toString();
+
+        const timeout = setTimeout(function() {
+          cleanup();
+          reject(new Error("Zahtjev je istekao. Provjeri Apps Script deployment."));
+        }, 15000);
+
+        window[callbackName] = function(data) {
+          cleanup();
+
+          if (!data || data.ok === false) {
+            reject(new Error(data && data.error ? data.error : "Nepoznata greška."));
+            return;
+          }
+
+          resolve(data);
+        };
+
+        script.onerror = function() {
+          cleanup();
+          reject(new Error("Greška kod poziva API-ja."));
+        };
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[callbackName];
+
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        }
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(function(screen) {
+        screen.classList.remove("active");
+      });
+
+      document.getElementById(id).classList.add("active");
+
+      if (id !== "screenAdmin") {
+        stopAdminAutoRefresh();
+      }
+    }
+
+    function showError(message) {
+      const box = document.getElementById("globalError");
+      box.textContent = message;
+      box.style.display = "block";
+
+      setTimeout(function() {
+        box.style.display = "none";
+      }, 7000);
+    }
+
+    function goHome() {
+      showScreen("screenName");
+      document.getElementById("customerName").focus();
+      renderMenuAvailability();
+    }
+
+    async function loadMenu() {
+      const loading = document.getElementById("menuLoading");
+
+      try {
+        loading.style.display = "block";
+
+        const data = await apiCall("menu");
+        state.menu = data.menu || [];
+
+        renderMenuAvailability();
+      } catch (err) {
+        showError(err.message);
+        state.menu = [];
+        renderMenuAvailability();
+      } finally {
+        loading.style.display = "none";
+      }
+    }
+
+    function renderMenuAvailability() {
+      const notice = document.getElementById("noMenuNotice");
+      const continueBtn = document.getElementById("continueBtn");
+
+      if (!state.menu.length) {
+        notice.style.display = "block";
+        continueBtn.disabled = true;
+      } else {
+        notice.style.display = "none";
+        continueBtn.disabled = false;
+      }
+    }
+
+    function continueToMenu() {
+      const input = document.getElementById("customerName");
+      const name = input.value.trim();
+
+      if (!name) {
+        alert("Molimo upišite ime i prezime.");
+        input.focus();
+        return;
+      }
+
+      if (!state.menu.length) {
+        alert("Meni trenutno nije dostupan.");
+        return;
+      }
+
+      state.customerName = name;
+      document.getElementById("customerNamePreview").textContent = name;
+      document.getElementById("orderNote").value = "";
+
+      renderPublicMenu();
+      showScreen("screenMenu");
+    }
+
+    function renderPublicMenu() {
+      const grid = document.getElementById("menuGrid");
+      grid.innerHTML = "";
+
+      state.menu.forEach(function(item) {
+        const card = document.createElement("div");
+        card.className = "meal-card";
+
+        const title = document.createElement("div");
+        title.className = "meal-title";
+        title.textContent = item.name || "";
+
+        const desc = document.createElement("div");
+        desc.className = "meal-desc";
+        desc.textContent = item.description || "Bez dodatnog opisa.";
+
+        const price = document.createElement("div");
+        price.className = "meal-price";
+        price.textContent = item.price || "";
+
+        const button = document.createElement("button");
+        button.textContent = "Odaberi";
+        button.onclick = function() {
+          submitOrder(item.id, button);
+        };
+
+        card.appendChild(title);
+        card.appendChild(desc);
+        card.appendChild(price);
+        card.appendChild(button);
+
+        grid.appendChild(card);
+      });
+    }
+
+    async function submitOrder(menuId, button) {
+      const note = document.getElementById("orderNote").value.trim();
+
+      try {
+        button.disabled = true;
+        button.textContent = "Šaljem...";
+
+        const data = await apiCall("createOrder", {
+          name: state.customerName,
+          menuId: menuId,
+          note: note
+        });
+
+        const order = data.order;
+
+        document.getElementById("orderConfirmation").textContent =
+          order.name + " — " + order.mealName;
+
+        showScreen("screenThanks");
+      } catch (err) {
+        showError(err.message);
+        button.disabled = false;
+        button.textContent = "Odaberi";
+      }
+    }
+
+    function resetForNextCustomer() {
+      state.customerName = "";
+      document.getElementById("customerName").value = "";
+      goHome();
+    }
+
+    function openAdminLogin() {
+      showScreen("screenAdminLogin");
+      document.getElementById("adminPin").focus();
+    }
+
+    async function adminLogin() {
+      const pin = document.getElementById("adminPin").value.trim();
+
+      if (!pin) {
+        alert("Upiši admin PIN.");
+        return;
+      }
+
+      state.adminPin = pin;
+
+      try {
+        await loadAdminOrders();
+        showScreen("screenAdmin");
+        startAdminAutoRefresh();
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    function startAdminAutoRefresh() {
+      stopAdminAutoRefresh();
+
+      state.adminTimer = setInterval(function() {
+        loadAdminOrders(true);
+      }, CONFIG.ADMIN_REFRESH_MS);
+    }
+
+    function stopAdminAutoRefresh() {
+      if (state.adminTimer) {
+        clearInterval(state.adminTimer);
+        state.adminTimer = null;
+      }
+    }
+
+    async function loadAdminOrders(silent = false) {
+      try {
+        const data = await apiCall("adminOrders", {
+          pin: state.adminPin
+        });
+
+        state.orders = data.orders || [];
+
+        renderAdminOrders();
+        renderSummary();
+        renderAdminMenu();
+
+        document.getElementById("adminLastRefresh").textContent =
+          "Zadnje osvježenje: " + new Date().toLocaleTimeString("hr-HR");
+
+        document.getElementById("adminTotalOrders").textContent =
+          "Narudžbe: " + state.orders.length;
+      } catch (err) {
+        if (!silent) {
+          showError(err.message);
+        }
+      }
+    }
+
+    function renderAdminOrders() {
+      const tbody = document.getElementById("ordersTableBody");
+      tbody.innerHTML = "";
+
+      if (!state.orders.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 6;
+        td.textContent = "Još nema narudžbi.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
+      state.orders.forEach(function(order) {
+        const tr = document.createElement("tr");
+
+        tr.appendChild(createCell(order.time));
+        tr.appendChild(createCell(order.name));
+
+        const mealTd = document.createElement("td");
+        mealTd.innerHTML =
+          "<strong>" + escapeHtml(order.mealName) + "</strong><br>" +
+          "<span class='muted'>" + escapeHtml(order.price || "") + "</span>";
+        tr.appendChild(mealTd);
+
+        tr.appendChild(createCell(order.note));
+
+        const statusTd = document.createElement("td");
+        const status = document.createElement("span");
+        status.className = "status " + statusClass(order.status);
+        status.textContent = order.status || "novo";
+        statusTd.appendChild(status);
+        tr.appendChild(statusTd);
+
+        const actionsTd = document.createElement("td");
+        const actions = document.createElement("div");
+        actions.className = "order-actions";
+
+        const makeBtn = document.createElement("button");
+        makeBtn.className = "small-btn warning";
+        makeBtn.textContent = "U izradi";
+        makeBtn.onclick = function() {
+          changeStatus(order.id, "u izradi");
+        };
+
+        const doneBtn = document.createElement("button");
+        doneBtn.className = "small-btn success";
+        doneBtn.textContent = "Gotovo";
+        doneBtn.onclick = function() {
+          changeStatus(order.id, "gotovo");
+        };
+
+        const newBtn = document.createElement("button");
+        newBtn.className = "small-btn light";
+        newBtn.textContent = "Novo";
+        newBtn.onclick = function() {
+          changeStatus(order.id, "novo");
+        };
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "small-btn danger";
+        deleteBtn.textContent = "Obriši";
+        deleteBtn.onclick = function() {
+          deleteOrder(order.id);
+        };
+
+        actions.appendChild(makeBtn);
+        actions.appendChild(doneBtn);
+        actions.appendChild(newBtn);
+        actions.appendChild(deleteBtn);
+
+        actionsTd.appendChild(actions);
+        tr.appendChild(actionsTd);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderSummary() {
+      const summary = {};
+
+      state.orders.forEach(function(order) {
+        if (order.status === "gotovo") {
+          return;
+        }
+
+        const meal = order.mealName || "Nepoznato jelo";
+        summary[meal] = (summary[meal] || 0) + 1;
+      });
+
+      const list = document.getElementById("summaryList");
+      list.innerHTML = "";
+
+      const entries = Object.entries(summary).sort(function(a, b) {
+        return b[1] - a[1];
+      });
+
+      if (!entries.length) {
+        list.innerHTML = "<div class='muted'>Trenutno nema aktivnih narudžbi za izradu.</div>";
+        return;
+      }
+
+      entries.forEach(function(entry) {
+        const meal = entry[0];
+        const count = entry[1];
+
+        const item = document.createElement("div");
+        item.className = "summary-item";
+        item.innerHTML =
+          "<span>" + escapeHtml(meal) + "</span>" +
+          "<span class='pill'>" + count + "</span>";
+
+        list.appendChild(item);
+      });
+    }
+
+    function renderAdminMenu() {
+      const list = document.getElementById("adminMenuList");
+      list.innerHTML = "";
+
+      if (!state.menu.length) {
+        list.innerHTML = "<div class='muted'>Meni nije učitan.</div>";
+        return;
+      }
+
+      state.menu.forEach(function(item) {
+        const div = document.createElement("div");
+        div.className = "summary-item";
+        div.innerHTML =
+          "<span>" + escapeHtml(item.name) + "</span>" +
+          "<strong>" + escapeHtml(item.price || "") + "</strong>";
+
+        list.appendChild(div);
+      });
+    }
+
+    async function changeStatus(id, status) {
+      try {
+        await apiCall("setStatus", {
+          pin: state.adminPin,
+          id: id,
+          status: status
+        });
+
+        await loadAdminOrders(true);
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    async function deleteOrder(id) {
+      if (!confirm("Obrisati ovu narudžbu?")) {
+        return;
+      }
+
+      try {
+        await apiCall("deleteOrder", {
+          pin: state.adminPin,
+          id: id
+        });
+
+        await loadAdminOrders(true);
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    async function clearOrders() {
+      if (!confirm("Obrisati sve narudžbe? Ovo ne možeš poništiti.")) {
+        return;
+      }
+
+      try {
+        await apiCall("clearOrders", {
+          pin: state.adminPin,
+          confirm: "YES"
+        });
+
+        state.orders = [];
+        renderAdminOrders();
+        renderSummary();
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    function exportCsv() {
+      if (!state.orders.length) {
+        alert("Nema narudžbi za izvoz.");
+        return;
+      }
+
+      const header = ["Vrijeme", "Ime", "Jelo", "Cijena", "Napomena", "Status"];
+
+      const rows = state.orders.map(function(order) {
+        return [
+          order.time || "",
+          order.name || "",
+          order.mealName || "",
+          order.price || "",
+          order.note || "",
+          order.status || ""
+        ];
+      });
+
+      const csv = [header].concat(rows)
+        .map(function(row) {
+          return row.map(csvEscape).join(";");
+        })
+        .join("\n");
+
+      const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+
+      a.href = url;
+      a.download = "narudzbe_hrane.csv";
+      a.click();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function createCell(text) {
+      const td = document.createElement("td");
+      td.textContent = text || "";
+      return td;
+    }
+
+    function statusClass(status) {
+      if (status === "gotovo") {
+        return "status-done";
+      }
+
+      if (status === "u izradi") {
+        return "status-making";
+      }
+
+      return "status-new";
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function csvEscape(value) {
+      const s = String(value || "");
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+  </script>
+</body>
+</html>
