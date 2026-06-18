@@ -428,7 +428,6 @@
     .product-visual.has-photo {
       padding: 0;
       background: #fff;
-      border: 1px solid var(--border);
     }
 
     .product-photo {
@@ -1434,11 +1433,12 @@
         };
 
         const imageUrl = getDessertImage(item.name, item.description);
+        const fallbackVisual = getDessertVisual(item.name, item.description);
         const visualHtml = imageUrl
           ? "<div class='product-visual has-photo'>" +
-              "<img class='product-photo' src='" + escapeHtml(imageUrl) + "' alt='" + escapeHtml(item.name || "Slatka kombinacija") + "' loading='lazy'>" +
+              "<img class='product-photo' src='" + escapeHtml(imageUrl) + "' alt='" + escapeHtml(item.name || 'Slatka kombinacija') + "' loading='lazy'>" +
             "</div>"
-          : "<div class='product-visual'>" + escapeHtml(getDessertVisual(item.name, item.description)) + "</div>";
+          : "<div class='product-visual'>" + escapeHtml(fallbackVisual) + "</div>";
 
         card.innerHTML =
           visualHtml +
@@ -1446,13 +1446,13 @@
           "<div class='product-desc'>" + escapeHtml(item.description || "Brownie, sladoled i slatki dodaci.") + "</div>" +
           "<div class='product-price'>" + escapeHtml(item.price || "") + "</div>";
 
-        const photo = card.querySelector(".product-photo");
-        if (photo) {
-          photo.addEventListener("error", function() {
-            const visual = photo.closest(".product-visual");
+        const img = card.querySelector(".product-photo");
+        if (img) {
+          img.addEventListener("error", function() {
+            const visual = this.closest(".product-visual");
             if (!visual) return;
             visual.classList.remove("has-photo");
-            visual.innerHTML = escapeHtml(getDessertVisual(item.name, item.description));
+            visual.textContent = fallbackVisual;
           });
         }
 
@@ -1996,19 +1996,19 @@
       const n = (String(name || "") + " " + String(description || "")).toLowerCase();
 
       if (n.includes("malin") || n.includes("raspber")) {
-        return "/images/čokolada-maline.png";
+        return "čokolada-maline.png";
       }
 
       if (n.includes("med") || n.includes("orah") || n.includes("orasi")) {
-        return "/images/med-orasi.png";
+        return "med-orasi.png";
       }
 
       if (n.includes("pistac") || n.includes("pistać") || n.includes("pistachio")) {
-        return "/images/pistacije.png";
+        return "pistacije.png";
       }
 
       if (n.includes("dulce") || n.includes("karamel") || n.includes("caramel") || n.includes("cimet")) {
-        return "/images/dulcedeleche-cimet.png";
+        return "dulcedeleche-cimet.png";
       }
 
       return "";
