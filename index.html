@@ -1,1017 +1,1930 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Slatke narudžbe</title>
 
   <style>
-    :root{
-      --bg:#fff8ef;
-      --card:#fffdf8;
-      --cream:#fff4de;
-      --choco:#3b2117;
-      --choco-2:#5a3325;
-      --caramel:#b9783b;
-      --pistachio:#94b56f;
-      --berry:#b9485b;
-      --muted:#7a6256;
-      --line:rgba(59,33,23,.14);
-      --shadow:0 18px 45px rgba(59,33,23,.12);
-      --radius:22px;
-      --danger:#b23b3b;
-      --ok:#477b3f;
-      --warn:#b9783b;
+    :root {
+      --cream: #fbf4ee;
+      --cream-2: #f7eadf;
+      --caramel: #c47a2c;
+      --caramel-dark: #9a5a1e;
+      --chocolate: #5b2c24;
+      --chocolate-dark: #2f1713;
+      --berry: #a23b72;
+      --pistachio: #6f8f4e;
+      --pistachio-dark: #546f3c;
+      --vanilla: #fffaf3;
+      --text: #241a16;
+      --muted: #7a6a62;
+      --bg: #fbf4ee;
+      --card: #ffffff;
+      --border: #e5d7cc;
+      --soft: #f7efe8;
+      --danger: #dc2626;
+      --shadow: 0 10px 28px rgba(91, 44, 36, 0.12);
+      --radius: 18px;
     }
 
-    *{ box-sizing:border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    body{
-      margin:0;
-      min-height:100vh;
+    html,
+    body {
+      margin: 0;
+      padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(148,181,111,.22), transparent 35%),
-        radial-gradient(circle at top right, rgba(185,120,59,.18), transparent 35%),
+        radial-gradient(circle at top left, rgba(196, 122, 44, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(162, 59, 114, 0.12), transparent 26%),
         var(--bg);
-      color:var(--choco);
+      color: var(--text);
     }
 
     button,
     input,
-    textarea{
-      font:inherit;
-    }
-
-    button{
-      cursor:pointer;
-    }
-
-    .page{
-      width:min(1180px, calc(100% - 28px));
-      margin:0 auto;
-      padding:24px 0 80px;
+    textarea {
+      font: inherit;
     }
-
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      margin-bottom:22px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    .brand-badge{
-      width:48px;
-      height:48px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg, var(--choco), var(--caramel));
-      color:#fff;
-      font-size:24px;
-      box-shadow:var(--shadow);
-    }
-
-    .brand h1{
-      margin:0;
-      font-size:clamp(24px, 4vw, 40px);
-      letter-spacing:-.04em;
-      line-height:1;
-    }
-
-    .brand p{
-      margin:5px 0 0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .ghost-btn{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.72);
-      color:var(--choco);
-      border-radius:999px;
-      padding:10px 14px;
-      font-weight:750;
-      box-shadow:0 8px 25px rgba(59,33,23,.06);
-    }
-
-    .hero{
-      border:1px solid var(--line);
-      background:linear-gradient(135deg, rgba(255,253,248,.92), rgba(255,244,222,.9));
-      border-radius:30px;
-      padding:24px;
-      box-shadow:var(--shadow);
-      margin-bottom:22px;
-      overflow:hidden;
-      position:relative;
-    }
-
-    .hero:after{
-      content:"";
-      position:absolute;
-      right:-80px;
-      top:-70px;
-      width:220px;
-      height:220px;
-      border-radius:50%;
-      background:rgba(148,181,111,.25);
-    }
-
-    .hero h2{
-      margin:0 0 8px;
-      font-size:clamp(26px, 5vw, 52px);
-      letter-spacing:-.055em;
-      line-height:.98;
-      max-width:760px;
-      position:relative;
-      z-index:1;
-    }
-
-    .hero p{
-      margin:0;
-      color:var(--muted);
-      max-width:680px;
-      line-height:1.5;
-      position:relative;
-      z-index:1;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns:minmax(0, 1fr) 360px;
-      gap:20px;
-      align-items:start;
-    }
-
-    .section-title{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:12px;
-      margin:4px 0 14px;
-    }
-
-    .section-title h3{
-      margin:0;
-      font-size:22px;
-      letter-spacing:-.03em;
-    }
-
-    .section-title span{
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .products{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:16px;
-    }
 
-    .product-card{
-      background:rgba(255,253,248,.94);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:18px;
-      box-shadow:0 12px 30px rgba(59,33,23,.08);
-      display:flex;
-      flex-direction:column;
-      min-height:100%;
-    }
-
-    .product-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:12px;
-      margin-bottom:12px;
-    }
-
-    .product-emoji{
-      width:58px;
-      height:58px;
-      border-radius:20px;
-      background:var(--cream);
-      display:grid;
-      place-items:center;
-      font-size:25px;
-      flex:0 0 auto;
-      border:1px solid var(--line);
-    }
-
-    .product-card h4{
-      margin:0;
-      font-size:20px;
-      letter-spacing:-.035em;
-      line-height:1.1;
-    }
-
-    .product-card .desc{
-      margin:8px 0 14px;
-      color:var(--muted);
-      line-height:1.45;
-      font-size:14px;
-      flex:1;
-    }
-
-    .price{
-      font-weight:900;
-      color:var(--choco);
-      white-space:nowrap;
-    }
-
-    .note-label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin:0 0 7px;
-      font-weight:750;
-    }
-
-    .note-input{
-      width:100%;
-      min-height:74px;
-      resize:vertical;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:#fff;
-      padding:11px 12px;
-      color:var(--choco);
-      outline:none;
-      margin-bottom:12px;
-    }
-
-    .note-input:focus,
-    .field:focus{
-      border-color:rgba(185,120,59,.55);
-      box-shadow:0 0 0 4px rgba(185,120,59,.12);
-    }
-
-    .product-actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
+    .screen {
+      display: none;
     }
 
-    .qty-control{
-      display:flex;
-      align-items:center;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:#fff;
-      overflow:hidden;
-      flex:0 0 auto;
+    .screen.active {
+      display: block;
     }
 
-    .qty-control button{
-      width:36px;
-      height:38px;
-      border:0;
-      background:#fff;
-      color:var(--choco);
-      font-weight:900;
-      font-size:18px;
+    .top-actions {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 50;
+      display: flex;
+      gap: 10px;
     }
 
-    .qty-control span{
-      min-width:34px;
-      text-align:center;
-      font-weight:900;
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: 0.15s ease;
     }
 
-    .primary-btn{
-      border:0;
-      background:linear-gradient(135deg, var(--choco), var(--choco-2));
-      color:#fff;
-      border-radius:999px;
-      padding:11px 16px;
-      font-weight:900;
-      box-shadow:0 12px 25px rgba(59,33,23,.18);
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
-    .primary-btn:disabled{
-      opacity:.55;
-      cursor:not-allowed;
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    .secondary-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--choco);
-      border-radius:999px;
-      padding:10px 14px;
-      font-weight:850;
+    .btn-primary {
+      background: var(--chocolate);
+      color: white;
     }
 
-    .add-btn{
-      flex:1;
+    .btn-primary:hover {
+      background: var(--chocolate-dark);
     }
 
-    .cart-panel{
-      position:sticky;
-      top:18px;
-      background:rgba(255,253,248,.96);
-      border:1px solid var(--line);
-      border-radius:26px;
-      box-shadow:var(--shadow);
-      padding:18px;
+    .btn-dark {
+      background: var(--chocolate-dark);
+      color: white;
     }
 
-    .cart-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-bottom:12px;
+    .btn-light {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
-    .cart-head h3{
-      margin:0;
-      font-size:22px;
-      letter-spacing:-.035em;
+    .btn-green {
+      background: var(--pistachio);
+      color: white;
     }
 
-    .cart-count{
-      background:var(--cream);
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:5px 10px;
-      color:var(--muted);
-      font-weight:850;
-      font-size:13px;
+    .btn-green:hover {
+      background: var(--pistachio-dark);
     }
 
-    .empty{
-      border:1px dashed rgba(59,33,23,.25);
-      border-radius:18px;
-      padding:16px;
-      color:var(--muted);
-      text-align:center;
-      line-height:1.4;
-      background:rgba(255,244,222,.45);
+    .btn-caramel {
+      background: var(--caramel);
+      color: white;
     }
 
-    .cart-items{
-      display:grid;
-      gap:10px;
-      margin:0 0 14px;
-      max-height:360px;
-      overflow:auto;
-      padding-right:4px;
+    .btn-caramel:hover {
+      background: var(--caramel-dark);
     }
 
-    .cart-item{
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      background:#fff;
+    .btn-danger {
+      background: var(--danger);
+      color: white;
     }
 
-    .cart-item-main{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
+    .btn-small {
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 850;
     }
 
-    .cart-item-title{
-      font-weight:900;
-      line-height:1.2;
+    .error-box {
+      display: none;
+      max-width: 1200px;
+      margin: 18px auto 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      font-weight: 750;
     }
 
-    .cart-item-sub{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:13px;
+    .welcome-wrap {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 30px 16px;
+    }
+
+    .welcome-card {
+      width: 100%;
+      max-width: 760px;
+      background: white;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 16px 44px rgba(91, 44, 36, 0.16);
+      border: 1px solid var(--border);
     }
 
-    .cart-note{
-      margin-top:9px;
-      padding:9px 10px;
-      background:rgba(148,181,111,.12);
-      border:1px solid rgba(148,181,111,.32);
-      border-radius:14px;
-      color:#49623b;
-      font-size:13px;
-      line-height:1.35;
+    .welcome-hero {
+      background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.26), transparent 34%),
+        linear-gradient(90deg, var(--chocolate), var(--caramel));
+      padding: 32px 28px;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .welcome-title {
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 0.95;
+      font-weight: 950;
+      letter-spacing: -0.06em;
+      margin: 0;
+      color: white;
+    }
+
+    .welcome-subtitle {
+      margin-top: 10px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 16px;
+      max-width: 460px;
+    }
+
+    .welcome-icons {
+      display: flex;
+      gap: 10px;
+      font-size: 42px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.12));
+    }
+
+    .welcome-body {
+      padding: 28px;
+      background: var(--vanilla);
     }
 
-    .cart-note strong{
-      display:block;
-      margin-bottom:3px;
+    .field-label {
+      display: block;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 14px;
+      padding: 15px 16px;
+      font-size: 16px;
+      margin-bottom: 16px;
+      outline: none;
     }
-
-    .cart-item-actions{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-top:10px;
-    }
-
-    .mini-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--choco);
-      width:32px;
-      height:32px;
-      border-radius:999px;
-      font-weight:900;
+
+    .input:focus,
+    .textarea:focus {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 4px rgba(196, 122, 44, 0.14);
+    }
+
+    .textarea {
+      width: 100%;
+      min-height: 78px;
+      resize: vertical;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 14px;
+      padding: 14px 16px;
+      outline: none;
+    }
+
+    .notice {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #fff8ef;
+      border: 1px solid #f3c99c;
+      color: #7c4a13;
+      font-weight: 750;
+    }
+
+    .loading {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .kiosk-page {
+      min-height: 100vh;
+      padding: 18px 18px 270px;
     }
 
-    .remove-btn{
-      margin-left:auto;
-      border:0;
-      background:transparent;
-      color:var(--danger);
-      font-weight:850;
-      padding:6px;
+    .kiosk-shell {
+      max-width: 1220px;
+      margin: 0 auto;
+      background: #f7efe8;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(91, 44, 36, 0.12);
+    }
+
+    .kiosk-header {
+      background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.26), transparent 32%),
+        linear-gradient(90deg, var(--chocolate), var(--caramel));
+      min-height: 92px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .header-foods {
+      display: flex;
+      gap: 10px;
+      font-size: 36px;
+      flex-wrap: wrap;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.12));
+    }
+
+    .header-title-block {
+      min-width: 0;
+    }
+
+    .header-title {
+      font-size: 23px;
+      font-weight: 950;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0;
+      color: white;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.84);
+      margin-top: 4px;
+    }
+
+    .search-box {
+      min-width: 220px;
+      max-width: 270px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box input {
+      border: 0;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .kiosk-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      min-height: 620px;
+    }
+
+    .menu-area {
+      padding: 18px;
+    }
+
+    .menu-area-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .menu-area h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 950;
+      letter-spacing: -0.05em;
+    }
+
+    .customer-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 850;
+      color: var(--text);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: white;
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: 14px;
+      min-height: 260px;
+      box-shadow: 0 2px 8px rgba(91, 44, 36, 0.05);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: 0.14s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(91, 44, 36, 0.10);
+    }
+
+    .product-card.selected {
+      border-color: var(--caramel);
+      box-shadow: 0 0 0 3px rgba(196, 122, 44, 0.18);
+    }
+
+    .product-visual {
+      height: 112px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.92), transparent 55%),
+        linear-gradient(135deg, #fff8ef, #f2dfd0);
+      display: grid;
+      place-items: center;
+      font-size: 38px;
+      line-height: 1.15;
+      white-space: nowrap;
+      margin-bottom: 14px;
+      overflow: hidden;
     }
+
+    .product-name {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
+      min-height: 38px;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 10px;
+    }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: 950;
+      color: var(--chocolate);
+    }
+
+    .bottom-order-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      background: white;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -8px 20px rgba(91, 44, 36, 0.08);
+    }
+
+    .bottom-order-inner {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+    }
 
-    .cart-total{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border-top:1px solid var(--line);
-      padding-top:12px;
-      margin-top:6px;
-      font-weight:950;
-      font-size:18px;
+    .order-mini-strip {
+      background: var(--cream-2);
+      color: var(--chocolate);
+      font-weight: 850;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px 10px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: 0;
+    }
+
+    .order-panel {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr auto auto auto;
+      gap: 12px;
+      align-items: center;
+      padding-top: 12px;
+    }
+
+    .selected-summary {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .selected-summary-emoji {
+      font-size: 28px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .selected-summary-title {
+      font-weight: 950;
+      line-height: 1.15;
+    }
+
+    .selected-summary-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .note-wrap {
+      min-width: 0;
+    }
+
+    .note-wrap textarea {
+      min-height: 78px;
+      margin: 0;
+    }
+
+    .cart-list {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+      max-height: 132px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .cart-empty {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 10px 12px;
+      background: #fffaf3;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .cart-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+      background: #fffaf3;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
     }
 
-    .customer-box{
-      display:grid;
-      gap:9px;
-      margin-top:14px;
+    .cart-title {
+      font-weight: 850;
+      line-height: 1.2;
     }
 
-    .field{
-      width:100%;
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:15px;
-      padding:11px 12px;
-      outline:none;
-      color:var(--choco);
+    .cart-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
-    .submit-row{
-      display:flex;
-      gap:10px;
-      margin-top:12px;
+    .cart-note {
+      font-size: 13px;
+      color: var(--chocolate);
+      margin-top: 6px;
+      padding: 8px 10px;
+      background: #fff3df;
+      border: 1px solid #f3c99c;
+      border-radius: 10px;
+      line-height: 1.35;
     }
 
-    .submit-row .primary-btn{
-      flex:1;
+    .cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 950;
     }
 
-    .status-msg{
-      margin-top:12px;
-      padding:11px 12px;
-      border-radius:15px;
-      font-size:14px;
-      line-height:1.35;
-      display:none;
+    .cart-qty button {
+      min-width: 30px;
+      height: 30px;
+      padding: 0;
     }
 
-    .status-msg.show{
-      display:block;
+    .thanks-card,
+    .admin-login-card {
+      max-width: 720px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .status-msg.ok{
-      background:rgba(71,123,63,.12);
-      border:1px solid rgba(71,123,63,.28);
-      color:var(--ok);
+    .thanks-top,
+    .admin-login-top {
+      background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.26), transparent 32%),
+        linear-gradient(90deg, var(--chocolate), var(--caramel));
+      padding: 24px;
+      color: white;
     }
 
-    .status-msg.err{
-      background:rgba(178,59,59,.1);
-      border:1px solid rgba(178,59,59,.25);
-      color:var(--danger);
+    .thanks-body,
+    .admin-login-body {
+      padding: 24px;
+      text-align: center;
+      background: var(--vanilla);
     }
 
-    .mobile-cart-bar{
-      display:none;
+    .big-emoji {
+      font-size: 56px;
+      margin-bottom: 8px;
     }
 
-    .cart-drawer{
-      display:none;
+    .success-box {
+      background: #f1f8ec;
+      border: 1px solid #cfe5c4;
+      color: #385824;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-weight: 850;
+      margin: 18px 0;
     }
 
-    .modal{
-      position:fixed;
-      inset:0;
-      z-index:50;
-      display:none;
-      align-items:stretch;
-      justify-content:center;
-      padding:18px;
+    .admin-page {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 18px;
     }
 
-    .modal.open{
-      display:flex;
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
     }
 
-    .modal-backdrop{
-      position:absolute;
-      inset:0;
-      background:rgba(35,20,14,.55);
-      backdrop-filter:blur(4px);
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
     }
 
-    .modal-card{
-      position:relative;
-      width:min(1080px, 100%);
-      max-height:calc(100vh - 36px);
-      overflow:auto;
-      background:var(--card);
-      border-radius:28px;
-      box-shadow:0 25px 80px rgba(0,0,0,.28);
-      border:1px solid var(--line);
-      padding:18px;
+    .panel-side {
+      padding: 18px;
     }
 
-    .modal-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:14px;
+    .panel-main {
+      padding: 18px;
     }
 
-    .modal-top h3{
-      margin:0;
-      font-size:24px;
-      letter-spacing:-.04em;
+    .panel-title {
+      margin: 0 0 12px;
+      font-size: 24px;
+      font-weight: 950;
+      letter-spacing: -0.04em;
     }
 
-    .close-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--choco);
-      width:40px;
-      height:40px;
-      border-radius:999px;
-      font-weight:950;
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
     }
 
-    .admin-login{
-      display:grid;
-      gap:10px;
-      max-width:420px;
-      margin:30px auto;
-      padding:20px;
-      border:1px solid var(--line);
-      border-radius:22px;
-      background:var(--cream);
+    .meta-chip {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
     }
 
-    .admin-area{
-      display:none;
+    .admin-kpis {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 14px 0 18px;
     }
 
-    .admin-area.active{
-      display:block;
+    .kpi {
+      background: #fffaf3;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
     }
 
-    .admin-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-bottom:14px;
+    .kpi strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 950;
+      letter-spacing: -0.05em;
     }
 
-    .admin-grid{
-      display:grid;
-      grid-template-columns:320px minmax(0,1fr);
-      gap:16px;
-      align-items:start;
+    .kpi span {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 750;
     }
 
-    .summary-box,
-    .orders-box{
-      border:1px solid var(--line);
-      border-radius:22px;
-      background:#fff;
-      padding:14px;
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
-    .summary-box h4,
-    .orders-box h4{
-      margin:0 0 12px;
-      font-size:18px;
-      letter-spacing:-.03em;
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    .summary-list{
-      display:grid;
-      gap:8px;
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
     }
 
-    .summary-line{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:1px solid rgba(59,33,23,.08);
-      padding-bottom:8px;
-      color:var(--muted);
+    .summary-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-weight: 850;
     }
 
-    .summary-line strong{
-      color:var(--choco);
+    .pill {
+      min-width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      background: var(--chocolate);
+      color: white;
+      font-weight: 950;
     }
 
-    .order-card{
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:13px;
-      background:rgba(255,248,239,.65);
-      margin-bottom:10px;
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
     }
 
-    .order-card:last-child{
-      margin-bottom:0;
+    table {
+      width: 100%;
+      min-width: 920px;
+      border-collapse: collapse;
     }
 
-    .order-head{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
-      margin-bottom:8px;
+    th,
+    td {
+      text-align: left;
+      vertical-align: top;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
     }
 
-    .order-title{
-      font-weight:950;
-      line-height:1.25;
+    th {
+      background: #fffaf3;
+      color: var(--chocolate);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 12px;
     }
 
-    .order-meta{
-      color:var(--muted);
-      font-size:13px;
-      margin-top:4px;
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
     }
-
-    .status-pill{
-      border-radius:999px;
-      padding:5px 9px;
-      font-size:12px;
-      font-weight:950;
-      white-space:nowrap;
-      border:1px solid var(--line);
-      background:#fff;
-    }
-
-    .status-pill.novo{ color:var(--berry); }
-    .status-pill.u-izradi{ color:var(--warn); }
-    .status-pill.gotovo{ color:var(--ok); }
 
-    .admin-note{
-      margin-top:9px;
-      padding:9px 10px;
-      background:#fff;
-      border:1px solid rgba(148,181,111,.36);
-      border-radius:14px;
-      color:#49623b;
-      font-size:13px;
-      line-height:1.35;
+    .status-new {
+      background: #fee2e2;
+      color: #991b1b;
     }
 
-    .admin-status-buttons{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:10px;
+    .status-making {
+      background: #fff0d9;
+      color: #8a4b0f;
     }
 
-    .admin-status-buttons button{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:999px;
-      padding:7px 10px;
-      font-weight:850;
-      color:var(--choco);
-      font-size:13px;
+    .status-done {
+      background: #ecf7e8;
+      color: #385824;
     }
 
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:24px;
-      transform:translateX(-50%) translateY(20px);
-      opacity:0;
-      pointer-events:none;
-      z-index:80;
-      background:var(--choco);
-      color:#fff;
-      border-radius:999px;
-      padding:12px 16px;
-      box-shadow:0 14px 38px rgba(0,0,0,.22);
-      transition:.22s ease;
-      font-weight:850;
-      max-width:calc(100% - 28px);
-      text-align:center;
+    .order-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
+    .muted {
+      color: var(--muted);
     }
 
-    @media (max-width:900px){
-      .layout{
-        grid-template-columns:1fr;
+    @media (max-width: 1080px) {
+      .product-grid {
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
       }
 
-      .cart-panel{
-        display:none;
+      .admin-layout {
+        grid-template-columns: 1fr;
       }
 
-      .products{
-        grid-template-columns:1fr;
+      .order-panel {
+        grid-template-columns: 1fr;
       }
 
-      .page{
-        padding-bottom:110px;
-      }
-
-      .mobile-cart-bar{
-        display:block;
-        position:fixed;
-        left:0;
-        right:0;
-        bottom:0;
-        z-index:35;
-        padding:12px 14px;
-        background:rgba(255,248,239,.92);
-        backdrop-filter:blur(12px);
-        border-top:1px solid var(--line);
-      }
-
-      .mobile-cart-bar button{
-        width:100%;
-        border:0;
-        border-radius:18px;
-        padding:14px 16px;
-        background:linear-gradient(135deg, var(--choco), var(--caramel));
-        color:#fff;
-        font-weight:950;
-        box-shadow:0 12px 25px rgba(59,33,23,.18);
-      }
-
-      .cart-drawer.open{
-        display:block;
-        position:fixed;
-        inset:0;
-        z-index:45;
-      }
-
-      .cart-drawer .drawer-backdrop{
-        position:absolute;
-        inset:0;
-        background:rgba(35,20,14,.55);
-        backdrop-filter:blur(4px);
-      }
-
-      .cart-drawer .drawer-card{
-        position:absolute;
-        left:0;
-        right:0;
-        bottom:0;
-        max-height:88vh;
-        overflow:auto;
-        background:var(--card);
-        border-radius:26px 26px 0 0;
-        padding:16px;
-        border:1px solid var(--line);
-        box-shadow:0 -20px 60px rgba(0,0,0,.22);
-      }
-
-      .drawer-title{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:12px;
-        margin-bottom:10px;
-      }
-
-      .drawer-title h3{
-        margin:0;
-        font-size:22px;
-      }
-
-      .cart-items{
-        max-height:32vh;
-      }
-
-      .admin-grid{
-        grid-template-columns:1fr;
-      }
-
-      .modal{
-        padding:10px;
-      }
-
-      .modal-card{
-        max-height:calc(100vh - 20px);
-        border-radius:24px;
+      .kiosk-page {
+        padding-bottom: 430px;
       }
     }
 
-    @media (max-width:520px){
-      .page{
-        width:min(100% - 20px, 1180px);
-        padding-top:14px;
+    @media (max-width: 820px) {
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
       }
 
-      .topbar{
-        align-items:flex-start;
+      .kiosk-header {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      .brand-badge{
-        width:42px;
-        height:42px;
-        border-radius:14px;
-        font-size:21px;
+      .search-box {
+        max-width: 100%;
       }
 
-      .hero{
-        padding:20px;
-        border-radius:24px;
+      .bottom-order-bar:not(.mobile-confirm-open) .cart-list {
+        display: none;
       }
 
-      .product-card{
-        padding:15px;
+      .bottom-order-bar.mobile-confirm-open .cart-list {
+        display: grid;
       }
 
-      .product-actions{
-        align-items:stretch;
+      .kiosk-page {
+        padding-bottom: 340px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .top-actions {
+        left: 12px;
+        right: 12px;
+        justify-content: space-between;
       }
 
-      .qty-control{
-        height:42px;
+      .top-actions .btn {
+        flex: 1;
       }
 
-      .add-btn{
-        padding-left:12px;
-        padding-right:12px;
+      .welcome-body,
+      .thanks-body,
+      .admin-login-body {
+        padding: 18px;
       }
 
-      .submit-row{
-        flex-direction:column;
+      .welcome-hero,
+      .thanks-top,
+      .admin-login-top {
+        padding: 18px;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kiosk-page,
+      .admin-page {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .kiosk-page {
+        padding-bottom: 340px;
+      }
+
+      .bottom-order-inner {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .cart-row {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-qty {
+        justify-content: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-badge">🍫</div>
-        <div>
-          <h1>Slatke narudžbe</h1>
-          <p>Brownie + sladoled kombinacije</p>
-        </div>
-      </div>
+  <div class="top-actions">
+    <button class="btn btn-light" onclick="goHome()">Početak</button>
+    <button class="btn btn-dark" onclick="openAdminLogin()">Admin</button>
+  </div>
 
-      <button class="ghost-btn" id="openAdminBtn" type="button">Admin</button>
-    </header>
+  <div id="globalError" class="error-box"></div>
 
-    <section class="hero">
-      <h2>Odaberi svoju brownie kombinaciju.</h2>
-      <p>
-        Dodaj jednu ili više kombinacija u košaricu. Za svako jelo možeš posebno ostaviti napomenu prije dodavanja.
-      </p>
-    </section>
-
-    <main class="layout">
-      <section>
-        <div class="section-title">
+  <section id="screenName" class="screen active">
+    <div class="welcome-wrap">
+      <div class="welcome-card">
+        <div class="welcome-hero">
           <div>
-            <h3>Ponuda</h3>
-            <span id="menuStatus">Učitavanje ponude...</span>
+            <h1 class="welcome-title">Složi svoju slatku kombinaciju</h1>
+            <div class="welcome-subtitle">
+              Upiši ime i odaberi današnju brownie, sladoled ili voćnu kombinaciju.
+            </div>
+          </div>
+
+          <div class="welcome-icons" aria-hidden="true">
+            <span>🍫</span>
+            <span>🍦</span>
+            <span>🫐</span>
+            <span>🥜</span>
           </div>
         </div>
 
-        <div class="products" id="products"></div>
-      </section>
+        <div class="welcome-body">
+          <label class="field-label" for="customerName">Ime i prezime</label>
+          <input id="customerName" class="input" type="text" placeholder="npr. Ivan Horvat" autocomplete="off" />
 
-      <aside class="cart-panel">
-        <div id="cartDesktop"></div>
-      </aside>
-    </main>
-  </div>
+          <button id="continueBtn" class="btn btn-primary" onclick="continueToMenu()">Nastavi na odabir kombinacije</button>
 
-  <div class="mobile-cart-bar">
-    <button id="openCartBtn" type="button">
-      Otvori košaricu · <span id="mobileCartCount">0</span>
-    </button>
-  </div>
+          <div id="menuLoading" class="loading">Učitavam današnje kombinacije...</div>
 
-  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
-    <div class="drawer-backdrop" id="closeCartBackdrop"></div>
-    <div class="drawer-card">
-      <div class="drawer-title">
-        <h3>Košarica</h3>
-        <button class="close-btn" id="closeCartBtn" type="button">×</button>
-      </div>
-      <div id="cartMobile"></div>
-    </div>
-  </div>
-
-  <div class="modal" id="adminModal" aria-hidden="true">
-    <div class="modal-backdrop" id="closeAdminBackdrop"></div>
-
-    <div class="modal-card">
-      <div class="modal-top">
-        <h3>Admin narudžbe</h3>
-        <button class="close-btn" id="closeAdminBtn" type="button">×</button>
-      </div>
-
-      <div class="admin-login" id="adminLogin">
-        <strong>Unesi admin PIN</strong>
-        <input class="field" id="adminPinInput" type="password" inputmode="numeric" placeholder="PIN" />
-        <button class="primary-btn" id="adminLoginBtn" type="button">Otvori admin</button>
-        <div class="status-msg err" id="adminLoginMsg"></div>
-      </div>
-
-      <div class="admin-area" id="adminArea">
-        <div class="admin-actions">
-          <button class="primary-btn" id="refreshOrdersBtn" type="button">Osvježi narudžbe</button>
-          <button class="secondary-btn" id="downloadCsvBtn" type="button">Preuzmi CSV</button>
-          <button class="secondary-btn" id="clearOrdersBtn" type="button">Obriši narudžbe</button>
-        </div>
-
-        <div class="admin-grid">
-          <section class="summary-box">
-            <h4>Sažetak</h4>
-            <div id="adminSummary" class="summary-list"></div>
-          </section>
-
-          <section class="orders-box">
-            <h4>Lista narudžbi</h4>
-            <div id="adminOrders"></div>
-          </section>
+          <div id="noMenuNotice" class="notice">
+            Meni trenutno nije dostupan. Provjeri Google Sheet tab <strong>Menu</strong> i vrijednosti <strong>aktivno = DA</strong>.
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="toast" id="toast"></div>
+  <section id="screenMenu" class="screen">
+    <div class="kiosk-page">
+      <div class="kiosk-shell">
+        <div class="kiosk-header">
+          <div class="header-left">
+            <div class="header-foods" aria-hidden="true">
+              <span>🍫</span>
+              <span>🍦</span>
+              <span>🫐</span>
+              <span>🍯</span>
+              <span>🥜</span>
+            </div>
+
+            <div class="header-title-block">
+              <h2 class="header-title">Današnje slatke kombinacije</h2>
+              <div class="header-sub">Brownie · sladoled · sirupi · namazi · voće · orašasti dodaci</div>
+            </div>
+          </div>
+
+          <div class="search-box">
+            <input id="menuSearch" type="text" placeholder="Pretraži kombinacije" />
+            <span>🔍</span>
+          </div>
+        </div>
+
+        <div class="kiosk-content">
+          <main class="menu-area">
+            <div class="menu-area-top">
+              <h1>Odaberi kombinaciju</h1>
+              <div class="customer-chip">👤 <span id="customerNamePreview"></span></div>
+            </div>
+
+            <div id="productGrid" class="product-grid"></div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-order-bar">
+      <div class="bottom-order-inner">
+        <div class="order-mini-strip">
+          <span id="selectedCountText">0 kombinacija u košarici</span>
+          <span>Odaberi kombinaciju → Dodaj u košaricu → Pošalji narudžbu</span>
+        </div>
+
+        <div class="order-panel">
+          <div id="selectedSummary" class="selected-summary">
+            <div class="selected-summary-emoji">🍨</div>
+            <div>
+              <div class="selected-summary-title">Još nije odabrana kombinacija</div>
+              <div class="selected-summary-sub">Odaberi jednu stavku iz ponude</div>
+            </div>
+          </div>
+
+          <div class="note-wrap">
+            <textarea id="orderNote" class="textarea" placeholder="Napomena za odabranu kombinaciju: npr. dodaj sastojak X, bez oraha, više sirupa..."></textarea>
+          </div>
+
+          <button class="btn btn-light" onclick="goHome()">Odustani</button>
+          <button id="addToCartBtn" class="btn btn-caramel" onclick="addSelectedToCart()" disabled>Dodaj u košaricu</button>
+          <button id="submitCartBtn" class="btn btn-green" onclick="submitCartOrder()" disabled>Pošalji narudžbu</button>
+        </div>
+
+        <div id="cartList" class="cart-list">
+          <div class="cart-empty">Košarica je prazna.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenThanks" class="screen">
+    <div class="welcome-wrap">
+      <div class="thanks-card">
+        <div class="thanks-top">
+          <div class="big-emoji">✅</div>
+          <h2 style="margin:0;font-size:34px;font-weight:950;letter-spacing:-0.05em;">Narudžba zaprimljena</h2>
+        </div>
+
+        <div class="thanks-body">
+          <div class="success-box">Hvala! Tvoja slatka narudžba je uspješno spremljena.</div>
+          <p id="orderConfirmation" class="muted"></p>
+
+          <button class="btn btn-primary" onclick="resetForNextCustomer()">Nova narudžba</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenAdminLogin" class="screen">
+    <div class="welcome-wrap">
+      <div class="admin-login-card">
+        <div class="admin-login-top">
+          <div class="big-emoji">🔐</div>
+          <h2 style="margin:0;font-size:34px;font-weight:950;letter-spacing:-0.05em;">Admin prijava</h2>
+        </div>
+
+        <div class="admin-login-body">
+          <p class="muted">Upiši admin PIN za pregled liste narudžbi.</p>
+
+          <label class="field-label" for="adminPin">Admin PIN</label>
+          <input id="adminPin" class="input" type="password" placeholder="PIN" autocomplete="off" />
+
+          <button class="btn btn-dark" onclick="adminLogin()">Uđi u admin</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenAdmin" class="screen">
+    <div class="admin-page">
+      <div class="admin-layout">
+        <aside class="panel panel-side">
+          <h2 class="panel-title">Admin panel</h2>
+
+          <div class="meta-row">
+            <span class="meta-chip" id="adminLastRefresh">Zadnje osvježenje: -</span>
+            <span class="meta-chip" id="adminTotalOrders">Narudžbe: 0</span>
+          </div>
+
+          <div class="admin-kpis">
+            <div class="kpi">
+              <strong id="kpiActive">0</strong>
+              <span>za izradu</span>
+            </div>
+            <div class="kpi">
+              <strong id="kpiDone">0</strong>
+              <span>gotovo</span>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <button class="btn btn-primary btn-small" onclick="loadAdminOrders()">Osvježi</button>
+            <button class="btn btn-green btn-small" onclick="exportCsv()">CSV</button>
+            <button class="btn btn-danger btn-small" onclick="clearOrders()">Obriši sve</button>
+          </div>
+
+          <h3>Sažetak za izradu</h3>
+          <p class="muted" style="margin-top:-4px;">Broje se samo narudžbe koje nisu označene kao gotovo.</p>
+          <div id="summaryList" class="summary-list"></div>
+
+          <h3>Trenutna ponuda</h3>
+          <div id="adminMenuList" class="summary-list"></div>
+        </aside>
+
+        <main class="panel panel-main">
+          <h2 class="panel-title">Lista narudžbi</h2>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vrijeme</th>
+                  <th>Ime</th>
+                  <th>Kombinacija</th>
+                  <th>Napomena</th>
+                  <th>Status</th>
+                  <th>Akcije</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr>
+                  <td colspan="6">Učitavam...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyZ8GeUcM9BtYntVy3GCmASAV-vokkau7sRCidxSl_CyluHmGyf90zfGv4EnryfPBYc/exec";
+    const CONFIG = {
+      API_URL: "https://script.google.com/macros/s/AKfycbyZ8GeUcM9BtYntVy3GCmASAV-vokkau7sRCidxSl_CyluHmGyf90zfGv4EnryfPBYc/exec",
+      ADMIN_REFRESH_MS: 12000
+    };
 
-    const DEFAULT_PRODUCTS = [
-      {
-        id: "cokoladni-sirup-maline",
-        name: "Čokoladni sirup i maline",
-        description: "Čokoladni brownie - čokoladni sirup - sladoled od vanilije - maline",
-        emoji: "🍫🍦🍓",
-        price: 0
-      },
-      {
-        id: "med-orasi",
-        name: "Med i orasi",
-        description: "Čokoladni brownie - med - sladoled od vanilije - orasi",
-        emoji: "🍯🍦🌰",
-        price: 0
-      },
-      {
-        id: "pistacije",
-        name: "Pistacije",
-        description: "Čokoladni brownie - namaz od pistacija - sladoled od vanilije - pistacije",
-        emoji: "🍫🍦🥜",
-        price: 0
-      },
-      {
-        id: "karamela-cimet",
-        name: "Karamela i cimet",
-        description: "Čokoladni brownie - karamela - sladoled od vanilije - cimet",
-        emoji: "🍮🍦🤎",
-        price: 0
+    const state = {
+      menu: [],
+      orders: [],
+      customerName: "",
+      adminPin: "",
+      adminTimer: null,
+      selectedMenuId: "",
+      cart: [],
+      menuSearch: "",
+      mobileCartConfirm: false
+    };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      loadMenu();
+
+      document.getElementById("customerName").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          continueToMenu();
+        }
+      });
+
+      document.getElementById("adminPin").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          adminLogin();
+        }
+      });
+
+      document.getElementById("menuSearch").addEventListener("input", function(event) {
+        state.menuSearch = event.target.value.trim().toLowerCase();
+        renderPublicMenu();
+      });
+
+      window.addEventListener("resize", function() {
+        renderCart();
+      });
+    });
+
+    function apiCall(action, params = {}) {
+      return new Promise(function(resolve, reject) {
+        const callbackName = "foodOrderCb_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+
+        const query = new URLSearchParams({
+          action: action,
+          callback: callbackName,
+          ...params
+        });
+
+        const script = document.createElement("script");
+        script.src = CONFIG.API_URL + "?" + query.toString();
+
+        const timeout = setTimeout(function() {
+          cleanup();
+          reject(new Error("Zahtjev je istekao. Provjeri Apps Script deployment."));
+        }, 15000);
+
+        window[callbackName] = function(data) {
+          cleanup();
+
+          if (!data || data.ok === false) {
+            reject(new Error(data && data.error ? data.error : "Nepoznata greška."));
+            return;
+          }
+
+          resolve(data);
+        };
+
+        script.onerror = function() {
+          cleanup();
+          reject(new Error("Greška kod poziva API-ja."));
+        };
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[callbackName];
+
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        }
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(function(screen) {
+        screen.classList.remove("active");
+      });
+
+      document.getElementById(id).classList.add("active");
+
+      if (id !== "screenAdmin") {
+        stopAdminAutoRefresh();
       }
-    ];
 
-    const ADMIN_PIN = "1234";
-    const CART_KEY = "slatke_narudzbe_cart_v2";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
-    let products = [...DEFAULT_PRODUCTS];
-    let cart = loadCart();
-    let adminPin = "";
-    let adminOrdersCache = [];
+    function showError(message) {
+      const box = document.getElementById("globalError");
+      box.textContent = message;
+      box.style.display = "block";
 
-    const $ = (selector, root = document) => root.querySelector(selector);
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
-    function escapeHtml(value){
-      return String(value ?? "")
+      setTimeout(function() {
+        box.style.display = "none";
+      }, 7000);
+    }
+
+    function goHome() {
+      state.selectedMenuId = "";
+      state.cart = [];
+      state.mobileCartConfirm = false;
+      showScreen("screenName");
+      document.getElementById("customerName").focus();
+      renderMenuAvailability();
+    }
+
+    async function loadMenu() {
+      const loading = document.getElementById("menuLoading");
+
+      try {
+        loading.style.display = "block";
+
+        const data = await apiCall("menu");
+        state.menu = data.menu || [];
+
+        renderMenuAvailability();
+
+      } catch (err) {
+        showError(err.message);
+        state.menu = [];
+        renderMenuAvailability();
+
+      } finally {
+        loading.style.display = "none";
+      }
+    }
+
+    function renderMenuAvailability() {
+      const notice = document.getElementById("noMenuNotice");
+      const continueBtn = document.getElementById("continueBtn");
+
+      if (!state.menu.length) {
+        notice.style.display = "block";
+        continueBtn.disabled = true;
+      } else {
+        notice.style.display = "none";
+        continueBtn.disabled = false;
+      }
+    }
+
+    function continueToMenu() {
+      const input = document.getElementById("customerName");
+      const name = input.value.trim();
+
+      if (!name) {
+        alert("Molimo upišite ime i prezime.");
+        input.focus();
+        return;
+      }
+
+      if (!state.menu.length) {
+        alert("Ponuda trenutno nije dostupna.");
+        return;
+      }
+
+      state.customerName = name;
+      state.selectedMenuId = "";
+      state.cart = [];
+      state.mobileCartConfirm = false;
+
+      document.getElementById("customerNamePreview").textContent = name;
+      document.getElementById("orderNote").value = "";
+      document.getElementById("menuSearch").value = "";
+      state.menuSearch = "";
+
+      renderPublicMenu();
+      updateSelectedSummary();
+      renderCart();
+
+      showScreen("screenMenu");
+    }
+
+    function renderPublicMenu() {
+      const grid = document.getElementById("productGrid");
+      grid.innerHTML = "";
+
+      const visibleMenu = state.menu.filter(function(item) {
+        if (!state.menuSearch) return true;
+
+        const haystack = (
+          String(item.name || "") + " " + String(item.description || "")
+        ).toLowerCase();
+
+        return haystack.includes(state.menuSearch);
+      });
+
+      if (!visibleMenu.length) {
+        grid.innerHTML =
+          "<div style='grid-column:1/-1;background:white;border:1px solid var(--border);border-radius:14px;padding:20px;'>" +
+            "Nema rezultata za ovu pretragu." +
+          "</div>";
+        return;
+      }
+
+      visibleMenu.forEach(function(item) {
+        const card = document.createElement("div");
+        card.className = "product-card" + (state.selectedMenuId === item.id ? " selected" : "");
+        card.onclick = function() {
+          selectMeal(item.id);
+        };
+
+        card.innerHTML =
+          "<div class='product-visual'>" + escapeHtml(getDessertVisual(item.name, item.description)) + "</div>" +
+          "<div class='product-name'>" + escapeHtml(item.name || "") + "</div>" +
+          "<div class='product-desc'>" + escapeHtml(item.description || "Brownie, sladoled i slatki dodaci.") + "</div>" +
+          "<div class='product-price'>" + escapeHtml(item.price || "") + "</div>";
+
+        grid.appendChild(card);
+      });
+    }
+
+    function selectMeal(menuId) {
+      const changedSelection = String(state.selectedMenuId) !== String(menuId);
+      state.selectedMenuId = menuId;
+      state.mobileCartConfirm = false;
+
+      if (changedSelection) {
+        document.getElementById("orderNote").value = "";
+      }
+
+      renderPublicMenu();
+      updateSelectedSummary();
+    }
+
+    function updateSelectedSummary() {
+      const selected = state.menu.find(function(item) {
+        return String(item.id) === String(state.selectedMenuId);
+      });
+
+      const summary = document.getElementById("selectedSummary");
+      const addBtn = document.getElementById("addToCartBtn");
+
+      if (!selected) {
+        addBtn.disabled = true;
+
+        summary.innerHTML =
+          "<div class='selected-summary-emoji'>🍨</div>" +
+          "<div>" +
+            "<div class='selected-summary-title'>Još nije odabrana kombinacija</div>" +
+            "<div class='selected-summary-sub'>Odaberi jednu stavku iz ponude</div>" +
+          "</div>";
+
+        renderCart();
+        return;
+      }
+
+      addBtn.disabled = false;
+
+      summary.innerHTML =
+        "<div class='selected-summary-emoji'>" + escapeHtml(getDessertVisual(selected.name, selected.description)) + "</div>" +
+        "<div>" +
+          "<div class='selected-summary-title'>" + escapeHtml(selected.name) + "</div>" +
+          "<div class='selected-summary-sub'>" + escapeHtml(selected.price || "Brownie + sladoled + dodaci") + "</div>" +
+        "</div>";
+
+      renderCart();
+    }
+
+    function addSelectedToCart() {
+      const selected = state.menu.find(function(item) {
+        return String(item.id) === String(state.selectedMenuId);
+      });
+
+      if (!selected) {
+        alert("Prvo odaberi kombinaciju.");
+        return;
+      }
+
+      const note = document.getElementById("orderNote").value.trim();
+
+      const existing = state.cart.find(function(item) {
+        return String(item.menuId) === String(selected.id) &&
+          String(item.note || "") === note;
+      });
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({
+          cartId: "cart_" + Date.now() + "_" + Math.random().toString(16).slice(2),
+          menuId: selected.id,
+          name: selected.name,
+          price: selected.price || "",
+          description: selected.description || "",
+          note: note,
+          qty: 1
+        });
+      }
+
+      document.getElementById("orderNote").value = "";
+      state.mobileCartConfirm = false;
+      renderCart();
+    }
+
+    function changeCartQty(cartId, delta) {
+      const item = state.cart.find(function(cartItem) {
+        return String(cartItem.cartId) === String(cartId);
+      });
+
+      if (!item) return;
+
+      item.qty += delta;
+
+      if (item.qty <= 0) {
+        state.cart = state.cart.filter(function(cartItem) {
+          return String(cartItem.cartId) !== String(cartId);
+        });
+      }
+
+      state.mobileCartConfirm = false;
+      renderCart();
+    }
+
+    function removeFromCart(cartId) {
+      state.cart = state.cart.filter(function(cartItem) {
+        return String(cartItem.cartId) !== String(cartId);
+      });
+
+      state.mobileCartConfirm = false;
+      renderCart();
+    }
+
+    function getCartTotalQty() {
+      return state.cart.reduce(function(total, item) {
+        return total + item.qty;
+      }, 0);
+    }
+
+    function renderCart() {
+      const cartList = document.getElementById("cartList");
+      const selectedCountText = document.getElementById("selectedCountText");
+      const submitBtn = document.getElementById("submitCartBtn");
+      const bottomBar = document.querySelector(".bottom-order-bar");
+
+      if (!cartList || !selectedCountText || !submitBtn) return;
+
+      const totalQty = getCartTotalQty();
+
+      if (bottomBar) {
+        bottomBar.classList.toggle("mobile-confirm-open", state.mobileCartConfirm);
+      }
+
+      if (totalQty === 1) {
+        selectedCountText.textContent = "1 kombinacija u košarici";
+      } else {
+        selectedCountText.textContent = totalQty + " kombinacija u košarici";
+      }
+
+      submitBtn.disabled = totalQty === 0;
+      submitBtn.textContent =
+        isMobileLayout() && state.mobileCartConfirm && totalQty > 0
+          ? "Potvrdi i pošalji"
+          : "Pošalji narudžbu";
+
+      if (!state.cart.length) {
+        cartList.innerHTML = "<div class='cart-empty'>Košarica je prazna.</div>";
+        return;
+      }
+
+      cartList.innerHTML = "";
+
+      state.cart.forEach(function(item) {
+        if (!item.cartId) {
+          item.cartId = "cart_" + item.menuId + "_" + Math.random().toString(16).slice(2);
+        }
+
+        const row = document.createElement("div");
+        row.className = "cart-row";
+
+        const noteHtml = item.note
+          ? "<div class='cart-note'><strong>Napomena:</strong> " + escapeHtml(item.note) + "</div>"
+          : "";
+
+        row.innerHTML =
+          "<div>" +
+            "<div class='cart-title'>" + escapeHtml(getDessertVisual(item.name, item.description)) + " " + escapeHtml(item.name) + "</div>" +
+            "<div class='cart-meta'>" + escapeHtml(item.price || "") + "</div>" +
+            noteHtml +
+          "</div>" +
+          "<div class='cart-qty'>" +
+            "<button class='btn btn-light btn-small' onclick=\"changeCartQty('" + escapeJs(item.cartId) + "', -1)\">−</button>" +
+            "<span>" + item.qty + "</span>" +
+            "<button class='btn btn-light btn-small' onclick=\"changeCartQty('" + escapeJs(item.cartId) + "', 1)\">+</button>" +
+          "</div>" +
+          "<button class='btn btn-danger btn-small' onclick=\"removeFromCart('" + escapeJs(item.cartId) + "')\">Ukloni</button>";
+
+        cartList.appendChild(row);
+      });
+    }
+
+    function isMobileLayout() {
+      return window.matchMedia("(max-width: 820px)").matches;
+    }
+
+    async function submitCartOrder() {
+      const totalQty = getCartTotalQty();
+
+      if (!totalQty) {
+        alert("Košarica je prazna.");
+        return;
+      }
+
+      if (isMobileLayout() && !state.mobileCartConfirm) {
+        state.mobileCartConfirm = true;
+        renderCart();
+        document.querySelector(".bottom-order-bar").scrollIntoView({ behavior: "smooth", block: "end" });
+        return;
+      }
+
+      const submitBtn = document.getElementById("submitCartBtn");
+      const addBtn = document.getElementById("addToCartBtn");
+
+      try {
+        submitBtn.disabled = true;
+        addBtn.disabled = true;
+        submitBtn.textContent = "Šaljem...";
+
+        for (const item of state.cart) {
+          for (let i = 0; i < item.qty; i++) {
+            await apiCall("createOrder", {
+              name: state.customerName,
+              menuId: item.menuId,
+              note: item.note || ""
+            });
+          }
+        }
+
+        document.getElementById("orderConfirmation").textContent =
+          state.customerName + " — " + totalQty + " kombinacija";
+
+        state.cart = [];
+        state.selectedMenuId = "";
+        state.mobileCartConfirm = false;
+        document.getElementById("orderNote").value = "";
+
+        renderCart();
+        updateSelectedSummary();
+
+        showScreen("screenThanks");
+
+      } catch (err) {
+        showError(err.message);
+
+      } finally {
+        submitBtn.textContent = "Pošalji narudžbu";
+        renderCart();
+        updateSelectedSummary();
+      }
+    }
+
+    function resetForNextCustomer() {
+      state.customerName = "";
+      state.selectedMenuId = "";
+      state.cart = [];
+      state.mobileCartConfirm = false;
+      document.getElementById("customerName").value = "";
+      goHome();
+    }
+
+    function openAdminLogin() {
+      showScreen("screenAdminLogin");
+      document.getElementById("adminPin").focus();
+    }
+
+    async function adminLogin() {
+      const pin = document.getElementById("adminPin").value.trim();
+
+      if (!pin) {
+        alert("Upiši admin PIN.");
+        return;
+      }
+
+      state.adminPin = pin;
+
+      try {
+        await loadAdminOrders();
+        showScreen("screenAdmin");
+        startAdminAutoRefresh();
+
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    function startAdminAutoRefresh() {
+      stopAdminAutoRefresh();
+
+      state.adminTimer = setInterval(function() {
+        loadAdminOrders(true);
+      }, CONFIG.ADMIN_REFRESH_MS);
+    }
+
+    function stopAdminAutoRefresh() {
+      if (state.adminTimer) {
+        clearInterval(state.adminTimer);
+        state.adminTimer = null;
+      }
+    }
+
+    async function loadAdminOrders(silent = false) {
+      try {
+        const data = await apiCall("adminOrders", {
+          pin: state.adminPin
+        });
+
+        state.orders = data.orders || [];
+
+        renderAdminOrders();
+        renderSummary();
+        renderAdminMenu();
+        renderKpis();
+
+        document.getElementById("adminLastRefresh").textContent =
+          "Zadnje osvježenje: " + new Date().toLocaleTimeString("hr-HR");
+
+        document.getElementById("adminTotalOrders").textContent =
+          "Narudžbe: " + state.orders.length;
+
+      } catch (err) {
+        if (!silent) showError(err.message);
+      }
+    }
+
+    function renderKpis() {
+      const active = state.orders.filter(function(order) {
+        return order.status !== "gotovo";
+      }).length;
+
+      const done = state.orders.filter(function(order) {
+        return order.status === "gotovo";
+      }).length;
+
+      document.getElementById("kpiActive").textContent = active;
+      document.getElementById("kpiDone").textContent = done;
+    }
+
+    function renderAdminOrders() {
+      const tbody = document.getElementById("ordersTableBody");
+      tbody.innerHTML = "";
+
+      if (!state.orders.length) {
+        tbody.innerHTML =
+          "<tr>" +
+            "<td colspan='6'>Još nema narudžbi.</td>" +
+          "</tr>";
+        return;
+      }
+
+      state.orders.forEach(function(order) {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML =
+          "<td>" + escapeHtml(order.time || "") + "</td>" +
+          "<td>" + escapeHtml(order.name || "") + "</td>" +
+          "<td>" +
+            "<div style='display:flex;align-items:flex-start;gap:10px;'>" +
+              "<span style='font-size:22px;line-height:1;white-space:nowrap;'>" + escapeHtml(getRailEmoji(order.mealName, "")) + "</span>" +
+              "<div>" +
+                "<div style='font-weight:850;'>" + escapeHtml(order.mealName || "") + "</div>" +
+                "<div class='muted'>" + escapeHtml(order.price || "") + "</div>" +
+              "</div>" +
+            "</div>" +
+          "</td>" +
+          "<td>" + escapeHtml(order.note || "") + "</td>" +
+          "<td><span class='status " + statusClass(order.status) + "'>" + escapeHtml(order.status || "novo") + "</span></td>" +
+          "<td>" +
+            "<div class='order-actions'>" +
+              "<button class='btn btn-caramel btn-small' onclick=\"changeStatus('" + escapeJs(order.id) + "','u izradi')\">U izradi</button>" +
+              "<button class='btn btn-green btn-small' onclick=\"changeStatus('" + escapeJs(order.id) + "','gotovo')\">Gotovo</button>" +
+              "<button class='btn btn-light btn-small' onclick=\"changeStatus('" + escapeJs(order.id) + "','novo')\">Novo</button>" +
+              "<button class='btn btn-danger btn-small' onclick=\"deleteOrder('" + escapeJs(order.id) + "')\">Obriši</button>" +
+            "</div>" +
+          "</td>";
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderSummary() {
+      const summary = {};
+
+      state.orders.forEach(function(order) {
+        if (order.status === "gotovo") return;
+
+        const meal = order.mealName || "Nepoznata kombinacija";
+        summary[meal] = (summary[meal] || 0) + 1;
+      });
+
+      const list = document.getElementById("summaryList");
+      list.innerHTML = "";
+
+      const entries = Object.entries(summary).sort(function(a, b) {
+        return b[1] - a[1];
+      });
+
+      if (!entries.length) {
+        list.innerHTML = "<div class='muted'>Trenutno nema aktivnih narudžbi za izradu.</div>";
+        return;
+      }
+
+      entries.forEach(function(entry) {
+        const meal = entry[0];
+        const count = entry[1];
+
+        const item = document.createElement("div");
+        item.className = "summary-item";
+        item.innerHTML =
+          "<div class='summary-item-left'>" +
+            "<span style='font-size:22px;'>" + escapeHtml(getRailEmoji(meal, "")) + "</span>" +
+            "<span>" + escapeHtml(meal) + "</span>" +
+          "</div>" +
+          "<span class='pill'>" + count + "</span>";
+        list.appendChild(item);
+      });
+    }
+
+    function renderAdminMenu() {
+      const list = document.getElementById("adminMenuList");
+      list.innerHTML = "";
+
+      if (!state.menu.length) {
+        list.innerHTML = "<div class='muted'>Ponuda nije učitana.</div>";
+        return;
+      }
+
+      state.menu.forEach(function(item) {
+        const div = document.createElement("div");
+        div.className = "summary-item";
+        div.innerHTML =
+          "<div class='summary-item-left'>" +
+            "<span style='font-size:22px;'>" + escapeHtml(getRailEmoji(item.name, item.description)) + "</span>" +
+            "<span>" + escapeHtml(item.name) + "</span>" +
+          "</div>" +
+          "<strong>" + escapeHtml(item.price || "") + "</strong>";
+
+        list.appendChild(div);
+      });
+    }
+
+    async function changeStatus(id, status) {
+      try {
+        await apiCall("setStatus", {
+          pin: state.adminPin,
+          id: id,
+          status: status
+        });
+
+        await loadAdminOrders(true);
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    async function deleteOrder(id) {
+      if (!confirm("Obrisati ovu narudžbu?")) return;
+
+      try {
+        await apiCall("deleteOrder", {
+          pin: state.adminPin,
+          id: id
+        });
+
+        await loadAdminOrders(true);
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    async function clearOrders() {
+      if (!confirm("Obrisati sve narudžbe? Ovo ne možeš poništiti.")) return;
+
+      try {
+        await apiCall("clearOrders", {
+          pin: state.adminPin,
+          confirm: "YES"
+        });
+
+        state.orders = [];
+        renderAdminOrders();
+        renderSummary();
+        renderKpis();
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    function exportCsv() {
+      if (!state.orders.length) {
+        alert("Nema narudžbi za izvoz.");
+        return;
+      }
+
+      const header = ["Vrijeme", "Ime", "Kombinacija", "Cijena", "Napomena", "Status"];
+
+      const rows = state.orders.map(function(order) {
+        return [
+          order.time || "",
+          order.name || "",
+          order.mealName || "",
+          order.price || "",
+          order.note || "",
+          order.status || ""
+        ];
+      });
+
+      const csv = [header].concat(rows)
+        .map(function(row) {
+          return row.map(csvEscape).join(";");
+        })
+        .join("\n");
+
+      const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "slatke_narudzbe.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function getDessertVisual(name, description) {
+      const n = (String(name || "") + " " + String(description || "")).toLowerCase();
+
+      if (n.includes("malin") || n.includes("raspber")) {
+        return "🍫 🍦 🫐";
+      }
+
+      if (n.includes("med") || n.includes("orah") || n.includes("orasi")) {
+        return "🍫 🍦 🍯 🥜";
+      }
+
+      if (n.includes("pistac") || n.includes("pistać") || n.includes("pistachio")) {
+        return "🍫 🍦 🥜";
+      }
+
+      if (n.includes("dulce") || n.includes("karamel") || n.includes("caramel") || n.includes("cimet")) {
+        return "🍫 🍦 🍮 ✨";
+      }
+
+      return "🍫 🍦";
+    }
+
+    function getRailEmoji(name, description) {
+      const n = (String(name || "") + " " + String(description || "")).toLowerCase();
+
+      if (n.includes("malin") || n.includes("raspber")) {
+        return "🫐";
+      }
+
+      if (n.includes("med") || n.includes("orah") || n.includes("orasi")) {
+        return "🍯";
+      }
+
+      if (n.includes("pistac") || n.includes("pistać") || n.includes("pistachio")) {
+        return "🥜";
+      }
+
+      if (n.includes("dulce") || n.includes("karamel") || n.includes("caramel") || n.includes("cimet")) {
+        return "🍮";
+      }
+
+      return "🍫";
+    }
+
+    function statusClass(status) {
+      if (status === "gotovo") return "status-done";
+      if (status === "u izradi") return "status-making";
+      return "status-new";
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
@@ -1019,835 +1932,16 @@
         .replaceAll("'", "&#039;");
     }
 
-    function normalizeText(value){
-      return String(value ?? "").trim();
+    function escapeJs(value) {
+      return String(value || "")
+        .replaceAll("\\", "\\\\")
+        .replaceAll("'", "\\'");
     }
 
-    function slugify(value){
-      return normalizeText(value)
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "") || String(Date.now());
+    function csvEscape(value) {
+      const s = String(value || "");
+      return '"' + s.replace(/"/g, '""') + '"';
     }
-
-    function money(value){
-      const n = Number(value);
-      if (!Number.isFinite(n) || n <= 0) return "";
-      return new Intl.NumberFormat("hr-HR", {
-        style: "currency",
-        currency: "EUR",
-        maximumFractionDigits: 2
-      }).format(n);
-    }
-
-    function itemCount(){
-      return cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-    }
-
-    function cartTotal(){
-      return cart.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 0), 0);
-    }
-
-    function loadCart(){
-      try{
-        return JSON.parse(localStorage.getItem(CART_KEY) || "[]");
-      }catch(_){
-        return [];
-      }
-    }
-
-    function saveCart(){
-      localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    }
-
-    function showToast(message){
-      const toast = $("#toast");
-      toast.textContent = message;
-      toast.classList.add("show");
-      window.clearTimeout(showToast._timer);
-      showToast._timer = window.setTimeout(() => toast.classList.remove("show"), 2300);
-    }
-
-    function setStatus(elementId, message, type = "ok"){
-      const el = $("#" + elementId);
-      if (!el) return;
-      if (!message){
-        el.className = "status-msg";
-        el.textContent = "";
-        return;
-      }
-      el.className = "status-msg show " + (type === "err" ? "err" : "ok");
-      el.textContent = message;
-    }
-
-    async function apiGet(action, params = {}){
-      const url = new URL(API_URL);
-      url.searchParams.set("action", action);
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) url.searchParams.set(key, value);
-      });
-
-      const res = await fetch(url.toString(), { method:"GET" });
-      const text = await res.text();
-      return parseApiText(text);
-    }
-
-    async function apiPost(payload){
-      const res = await fetch(API_URL, {
-        method:"POST",
-        body: JSON.stringify(payload)
-      });
-      const text = await res.text();
-      return parseApiText(text);
-    }
-
-    function parseApiText(text){
-      const clean = String(text || "").trim();
-      if (!clean) return {};
-      try{
-        return JSON.parse(clean);
-      }catch(_){
-        return { ok:true, raw:clean };
-      }
-    }
-
-    function extractArray(response){
-      if (Array.isArray(response)) return response;
-      if (Array.isArray(response?.data)) return response.data;
-      if (Array.isArray(response?.items)) return response.items;
-      if (Array.isArray(response?.orders)) return response.orders;
-      if (Array.isArray(response?.menu)) return response.menu;
-      if (Array.isArray(response?.rows)) return response.rows;
-      return [];
-    }
-
-    function pick(obj, keys, fallback = ""){
-      for (const key of keys){
-        if (obj && obj[key] !== undefined && obj[key] !== null && String(obj[key]).trim() !== ""){
-          return obj[key];
-        }
-      }
-      return fallback;
-    }
-
-    function guessEmoji(name){
-      const n = normalizeText(name).toLowerCase();
-      if (n.includes("malin")) return "🍫🍦🍓";
-      if (n.includes("med") || n.includes("orah")) return "🍯🍦🌰";
-      if (n.includes("pist")) return "🍫🍦🥜";
-      if (n.includes("karamel") || n.includes("cimet") || n.includes("dulce")) return "🍮🍦🤎";
-      return "🍫🍦";
-    }
-
-    function normalizeMenuItem(row, index){
-      const name = normalizeText(pick(row, ["name", "naziv", "Naziv", "jelo", "Jelo", "product", "Product"], DEFAULT_PRODUCTS[index]?.name || "Jelo"));
-      const description = normalizeText(pick(row, ["description", "opis", "Opis", "sastav", "Sastav"], DEFAULT_PRODUCTS[index]?.description || ""));
-      const priceRaw = pick(row, ["price", "cijena", "Cijena", "eur", "EUR"], DEFAULT_PRODUCTS[index]?.price || 0);
-      const price = Number(String(priceRaw).replace(",", "."));
-
-      return {
-        id: normalizeText(pick(row, ["id", "ID", "productId", "product_id"], slugify(name))),
-        name,
-        description,
-        emoji: normalizeText(pick(row, ["emoji", "Emoji", "ikona", "Ikona"], guessEmoji(name))),
-        price: Number.isFinite(price) ? price : 0
-      };
-    }
-
-    async function loadMenu(){
-      const status = $("#menuStatus");
-
-      try{
-        let response;
-        try{
-          response = await apiGet("menu");
-        }catch(_){
-          response = await apiGet("getMenu");
-        }
-
-        const rows = extractArray(response);
-        const activeRows = rows.filter(row => {
-          const active = pick(row, ["active", "Active", "aktivno", "Aktivno"], "DA");
-          return !["ne", "no", "false", "0"].includes(String(active).trim().toLowerCase());
-        });
-
-        if (activeRows.length){
-          products = activeRows.map(normalizeMenuItem).slice(0, 4);
-        }
-
-        status.textContent = products.length + " kombinacije";
-      }catch(error){
-        products = [...DEFAULT_PRODUCTS];
-        status.textContent = "Prikazana je zadana ponuda";
-      }
-
-      renderProducts();
-      renderCart();
-    }
-
-    function renderProducts(){
-      const productsEl = $("#products");
-
-      productsEl.innerHTML = products.map((product, index) => `
-        <article class="product-card" data-product-id="${escapeHtml(product.id)}">
-          <div class="product-top">
-            <div>
-              <h4>${escapeHtml(product.name)}</h4>
-              <div class="desc">${escapeHtml(product.description)}</div>
-            </div>
-            <div class="product-emoji" aria-hidden="true">${escapeHtml(product.emoji)}</div>
-          </div>
-
-          <div class="product-top">
-            <label class="note-label" for="note-${index}">Napomena za ovo jelo</label>
-            <div class="price">${money(product.price)}</div>
-          </div>
-
-          <textarea
-            class="note-input"
-            id="note-${index}"
-            placeholder="Npr. bez oraha, manje sirupa, dodatno zapeći..."
-            maxlength="280"
-          ></textarea>
-
-          <div class="product-actions">
-            <div class="qty-control" aria-label="Količina">
-              <button type="button" class="product-minus">−</button>
-              <span class="product-qty">1</span>
-              <button type="button" class="product-plus">+</button>
-            </div>
-
-            <button type="button" class="primary-btn add-btn">Dodaj u košaricu</button>
-          </div>
-        </article>
-      `).join("");
-
-      productsEl.querySelectorAll(".product-card").forEach(card => {
-        const productId = card.dataset.productId;
-        const qtyEl = $(".product-qty", card);
-
-        $(".product-minus", card).addEventListener("click", () => {
-          qtyEl.textContent = Math.max(1, Number(qtyEl.textContent) - 1);
-        });
-
-        $(".product-plus", card).addEventListener("click", () => {
-          qtyEl.textContent = Math.min(20, Number(qtyEl.textContent) + 1);
-        });
-
-        $(".add-btn", card).addEventListener("click", () => {
-          const product = products.find(p => p.id === productId);
-          const quantity = Number(qtyEl.textContent) || 1;
-          const note = normalizeText($(".note-input", card).value);
-
-          addToCart(product, quantity, note);
-
-          qtyEl.textContent = "1";
-          $(".note-input", card).value = "";
-        });
-      });
-    }
-
-    function addToCart(product, quantity, note){
-      if (!product) return;
-
-      const existing = cart.find(item =>
-        item.productId === product.id &&
-        normalizeText(item.note) === normalizeText(note)
-      );
-
-      if (existing){
-        existing.quantity += quantity;
-      }else{
-        cart.push({
-          lineId: "line-" + Date.now() + "-" + Math.random().toString(16).slice(2),
-          productId: product.id,
-          name: product.name,
-          description: product.description,
-          price: product.price || 0,
-          quantity,
-          note
-        });
-      }
-
-      saveCart();
-      renderCart();
-
-      if (note){
-        showToast("Dodano u košaricu s napomenom.");
-      }else{
-        showToast("Dodano u košaricu.");
-      }
-    }
-
-    function renderCart(){
-      $("#cartDesktop").innerHTML = cartTemplate(false);
-      $("#cartMobile").innerHTML = cartTemplate(true);
-      $("#mobileCartCount").textContent = itemCount();
-
-      bindCartEvents($("#cartDesktop"));
-      bindCartEvents($("#cartMobile"));
-    }
-
-    function cartTemplate(isMobile){
-      const count = itemCount();
-      const total = cartTotal();
-      const hasPrices = cart.some(item => Number(item.price) > 0);
-
-      return `
-        <div class="cart-head">
-          <h3>${isMobile ? "Pregled narudžbe" : "Košarica"}</h3>
-          <span class="cart-count">${count} kom</span>
-        </div>
-
-        ${cart.length === 0 ? `
-          <div class="empty">
-            Košarica je prazna. Dodaj jednu ili više kombinacija iz ponude.
-          </div>
-        ` : `
-          <div class="cart-items">
-            ${cart.map(item => `
-              <div class="cart-item" data-line-id="${escapeHtml(item.lineId)}">
-                <div class="cart-item-main">
-                  <div>
-                    <div class="cart-item-title">${escapeHtml(item.name)}</div>
-                    <div class="cart-item-sub">
-                      ${Number(item.quantity)} × ${money(item.price) || "stavka"}
-                    </div>
-                  </div>
-                  <strong>${money(Number(item.price) * Number(item.quantity))}</strong>
-                </div>
-
-                ${normalizeText(item.note) ? `
-                  <div class="cart-note">
-                    <strong>Napomena:</strong>
-                    ${escapeHtml(item.note)}
-                  </div>
-                ` : ""}
-
-                <div class="cart-item-actions">
-                  <button type="button" class="mini-btn cart-minus">−</button>
-                  <strong>${Number(item.quantity)}</strong>
-                  <button type="button" class="mini-btn cart-plus">+</button>
-                  <button type="button" class="remove-btn">Ukloni</button>
-                </div>
-              </div>
-            `).join("")}
-          </div>
-
-          ${hasPrices ? `
-            <div class="cart-total">
-              <span>Ukupno</span>
-              <span>${money(total)}</span>
-            </div>
-          ` : ""}
-
-          <div class="customer-box">
-            <input class="field customer-name" type="text" placeholder="Ime kupca" autocomplete="name" />
-            <input class="field customer-contact" type="text" placeholder="Kontakt / stol / broj narudžbe" />
-          </div>
-
-          <div class="submit-row">
-            <button class="secondary-btn clear-cart" type="button">Isprazni</button>
-            <button class="primary-btn send-order" type="button">Pošalji narudžbu</button>
-          </div>
-
-          <div class="status-msg order-msg"></div>
-        `}
-      `;
-    }
-
-    function bindCartEvents(root){
-      if (!root) return;
-
-      root.querySelectorAll(".cart-item").forEach(card => {
-        const lineId = card.dataset.lineId;
-
-        $(".cart-minus", card).addEventListener("click", () => changeLineQty(lineId, -1));
-        $(".cart-plus", card).addEventListener("click", () => changeLineQty(lineId, 1));
-        $(".remove-btn", card).addEventListener("click", () => removeLine(lineId));
-      });
-
-      const clearBtn = $(".clear-cart", root);
-      if (clearBtn){
-        clearBtn.addEventListener("click", () => {
-          cart = [];
-          saveCart();
-          renderCart();
-          showToast("Košarica je ispražnjena.");
-        });
-      }
-
-      const sendBtn = $(".send-order", root);
-      if (sendBtn){
-        sendBtn.addEventListener("click", () => submitOrder(root));
-      }
-    }
-
-    function changeLineQty(lineId, delta){
-      const item = cart.find(line => line.lineId === lineId);
-      if (!item) return;
-
-      item.quantity = Math.max(1, Math.min(20, Number(item.quantity) + delta));
-      saveCart();
-      renderCart();
-    }
-
-    function removeLine(lineId){
-      cart = cart.filter(line => line.lineId !== lineId);
-      saveCart();
-      renderCart();
-    }
-
-    async function submitOrder(root){
-      const msg = $(".order-msg", root);
-      const sendBtn = $(".send-order", root);
-      const customerName = normalizeText($(".customer-name", root)?.value);
-      const customerContact = normalizeText($(".customer-contact", root)?.value);
-
-      msg.className = "status-msg";
-      msg.textContent = "";
-
-      if (!cart.length){
-        msg.className = "status-msg show err";
-        msg.textContent = "Košarica je prazna.";
-        return;
-      }
-
-      if (!customerName){
-        msg.className = "status-msg show err";
-        msg.textContent = "Upiši ime kupca prije slanja narudžbe.";
-        return;
-      }
-
-      const orderGroup = "ORD-" + Date.now() + "-" + Math.random().toString(16).slice(2, 7);
-      const createdAt = new Date().toISOString();
-
-      sendBtn.disabled = true;
-      sendBtn.textContent = "Slanje...";
-
-      try{
-        for (const item of cart){
-          const payload = {
-            action: "createOrder",
-
-            orderGroup,
-            order_group: orderGroup,
-            orderId: orderGroup,
-            order_id: orderGroup,
-
-            createdAt,
-            created_at: createdAt,
-            vrijeme: createdAt,
-
-            customerName,
-            customer_name: customerName,
-            ime: customerName,
-            kupac: customerName,
-
-            customerContact,
-            customer_contact: customerContact,
-            kontakt: customerContact,
-
-            productId: item.productId,
-            product_id: item.productId,
-
-            productName: item.name,
-            product_name: item.name,
-            product: item.name,
-            jelo: item.name,
-            naziv: item.name,
-
-            description: item.description || "",
-            opis: item.description || "",
-
-            quantity: Number(item.quantity),
-            qty: Number(item.quantity),
-            kolicina: Number(item.quantity),
-            količina: Number(item.quantity),
-
-            price: Number(item.price || 0),
-            cijena: Number(item.price || 0),
-
-            note: item.note || "",
-            notes: item.note || "",
-            napomena: item.note || "",
-
-            status: "novo"
-          };
-
-          const response = await apiPost(payload);
-
-          if (response && response.ok === false){
-            throw new Error(response.error || "Narudžba nije spremljena.");
-          }
-        }
-
-        cart = [];
-        saveCart();
-        renderCart();
-        closeCartDrawer();
-
-        showToast("Narudžba je poslana.");
-      }catch(error){
-        msg.className = "status-msg show err";
-        msg.textContent = "Greška kod slanja narudžbe. Provjeri Apps Script / Google Sheet vezu.";
-      }finally{
-        sendBtn.disabled = false;
-        sendBtn.textContent = "Pošalji narudžbu";
-      }
-    }
-
-    function openCartDrawer(){
-      $("#cartDrawer").classList.add("open");
-      $("#cartDrawer").setAttribute("aria-hidden", "false");
-    }
-
-    function closeCartDrawer(){
-      $("#cartDrawer").classList.remove("open");
-      $("#cartDrawer").setAttribute("aria-hidden", "true");
-    }
-
-    function openAdmin(){
-      $("#adminModal").classList.add("open");
-      $("#adminModal").setAttribute("aria-hidden", "false");
-      setStatus("adminLoginMsg", "");
-      window.setTimeout(() => $("#adminPinInput")?.focus(), 50);
-    }
-
-    function closeAdmin(){
-      $("#adminModal").classList.remove("open");
-      $("#adminModal").setAttribute("aria-hidden", "true");
-    }
-
-    function adminLogin(){
-      const value = normalizeText($("#adminPinInput").value);
-
-      if (value !== ADMIN_PIN){
-        setStatus("adminLoginMsg", "PIN nije ispravan.", "err");
-        return;
-      }
-
-      adminPin = value;
-      $("#adminLogin").style.display = "none";
-      $("#adminArea").classList.add("active");
-      loadAdminOrders();
-    }
-
-    async function loadAdminOrders(){
-      const ordersEl = $("#adminOrders");
-      const summaryEl = $("#adminSummary");
-
-      ordersEl.innerHTML = `<div class="empty">Učitavanje narudžbi...</div>`;
-      summaryEl.innerHTML = `<div class="empty">Učitavanje...</div>`;
-
-      try{
-        let response;
-        const actions = ["listOrders", "orders", "getOrders"];
-
-        for (const action of actions){
-          try{
-            response = await apiGet(action, { pin: adminPin });
-            const rows = extractArray(response);
-            if (rows.length || response?.ok !== false) break;
-          }catch(_){}
-        }
-
-        adminOrdersCache = extractArray(response).map(normalizeOrderRow);
-        renderAdmin();
-      }catch(error){
-        ordersEl.innerHTML = `<div class="empty">Nije moguće učitati narudžbe.</div>`;
-        summaryEl.innerHTML = `<div class="empty">Nema podataka.</div>`;
-      }
-    }
-
-    function normalizeOrderRow(row, index){
-      const statusRaw = normalizeText(pick(row, ["status", "Status"], "novo")).toLowerCase();
-      const status = statusRaw || "novo";
-
-      const quantityRaw = pick(row, ["quantity", "qty", "kolicina", "količina", "Količina"], 1);
-      const priceRaw = pick(row, ["price", "cijena", "Cijena"], 0);
-
-      return {
-        id: normalizeText(pick(row, ["id", "ID", "rowId", "row_id", "row", "Row"], index + 1)),
-        orderGroup: normalizeText(pick(row, ["orderGroup", "order_group", "orderId", "order_id", "Narudžba"], "")),
-        createdAt: normalizeText(pick(row, ["createdAt", "created_at", "vrijeme", "Vrijeme", "timestamp", "Timestamp"], "")),
-        customerName: normalizeText(pick(row, ["customerName", "customer_name", "ime", "kupac", "Kupac"], "")),
-        customerContact: normalizeText(pick(row, ["customerContact", "customer_contact", "kontakt", "Kontakt"], "")),
-        productName: normalizeText(pick(row, ["productName", "product_name", "product", "jelo", "naziv", "Jelo"], "Jelo")),
-        quantity: Number(String(quantityRaw).replace(",", ".")) || 1,
-        price: Number(String(priceRaw).replace(",", ".")) || 0,
-        note: normalizeText(pick(row, ["note", "notes", "napomena", "Napomena"], "")),
-        status
-      };
-    }
-
-    function statusClass(status){
-      const s = normalizeText(status).toLowerCase();
-      if (s.includes("got")) return "gotovo";
-      if (s.includes("izradi")) return "u-izradi";
-      return "novo";
-    }
-
-    function statusLabel(status){
-      const cls = statusClass(status);
-      if (cls === "u-izradi") return "u izradi";
-      if (cls === "gotovo") return "gotovo";
-      return "novo";
-    }
-
-    function formatDate(value){
-      if (!value) return "";
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return value;
-
-      return new Intl.DateTimeFormat("hr-HR", {
-        day:"2-digit",
-        month:"2-digit",
-        year:"numeric",
-        hour:"2-digit",
-        minute:"2-digit"
-      }).format(date);
-    }
-
-    function renderAdmin(){
-      renderAdminSummary();
-      renderAdminOrders();
-    }
-
-    function renderAdminSummary(){
-      const summaryEl = $("#adminSummary");
-
-      if (!adminOrdersCache.length){
-        summaryEl.innerHTML = `<div class="empty">Nema narudžbi.</div>`;
-        return;
-      }
-
-      const byProduct = new Map();
-      const byStatus = new Map();
-
-      for (const order of adminOrdersCache){
-        byProduct.set(order.productName, (byProduct.get(order.productName) || 0) + order.quantity);
-        const st = statusLabel(order.status);
-        byStatus.set(st, (byStatus.get(st) || 0) + 1);
-      }
-
-      const productLines = [...byProduct.entries()]
-        .sort((a,b) => b[1] - a[1])
-        .map(([name, qty]) => `
-          <div class="summary-line">
-            <span>${escapeHtml(name)}</span>
-            <strong>${qty}</strong>
-          </div>
-        `).join("");
-
-      const statusLines = [...byStatus.entries()]
-        .map(([status, count]) => `
-          <div class="summary-line">
-            <span>${escapeHtml(status)}</span>
-            <strong>${count}</strong>
-          </div>
-        `).join("");
-
-      summaryEl.innerHTML = `
-        <div class="summary-line">
-          <span>Ukupno stavki</span>
-          <strong>${adminOrdersCache.length}</strong>
-        </div>
-        <div class="summary-line">
-          <span>Ukupno komada</span>
-          <strong>${adminOrdersCache.reduce((sum, o) => sum + o.quantity, 0)}</strong>
-        </div>
-        <br />
-        ${productLines}
-        <br />
-        ${statusLines}
-      `;
-    }
-
-    function renderAdminOrders(){
-      const ordersEl = $("#adminOrders");
-
-      if (!adminOrdersCache.length){
-        ordersEl.innerHTML = `<div class="empty">Nema narudžbi.</div>`;
-        return;
-      }
-
-      ordersEl.innerHTML = adminOrdersCache
-        .slice()
-        .reverse()
-        .map(order => {
-          const cls = statusClass(order.status);
-
-          return `
-            <article class="order-card" data-order-id="${escapeHtml(order.id)}">
-              <div class="order-head">
-                <div>
-                  <div class="order-title">
-                    ${escapeHtml(order.quantity)} × ${escapeHtml(order.productName)}
-                  </div>
-                  <div class="order-meta">
-                    ${escapeHtml(order.customerName || "Kupac")}
-                    ${order.customerContact ? " · " + escapeHtml(order.customerContact) : ""}
-                    ${order.createdAt ? " · " + escapeHtml(formatDate(order.createdAt)) : ""}
-                  </div>
-                  ${order.orderGroup ? `
-                    <div class="order-meta">Narudžba: ${escapeHtml(order.orderGroup)}</div>
-                  ` : ""}
-                </div>
-
-                <span class="status-pill ${cls}">
-                  ${escapeHtml(statusLabel(order.status))}
-                </span>
-              </div>
-
-              ${order.note ? `
-                <div class="admin-note">
-                  <strong>Napomena:</strong>
-                  ${escapeHtml(order.note)}
-                </div>
-              ` : ""}
-
-              <div class="admin-status-buttons">
-                <button type="button" data-status="novo">novo</button>
-                <button type="button" data-status="u izradi">u izradi</button>
-                <button type="button" data-status="gotovo">gotovo</button>
-              </div>
-            </article>
-          `;
-        }).join("");
-
-      ordersEl.querySelectorAll(".order-card").forEach(card => {
-        card.querySelectorAll("[data-status]").forEach(button => {
-          button.addEventListener("click", () => updateOrderStatus(card.dataset.orderId, button.dataset.status));
-        });
-      });
-    }
-
-    async function updateOrderStatus(orderId, status){
-      try{
-        const response = await apiPost({
-          action: "updateStatus",
-          pin: adminPin,
-          id: orderId,
-          rowId: orderId,
-          row_id: orderId,
-          status
-        });
-
-        if (response && response.ok === false){
-          throw new Error(response.error || "Status nije spremljen.");
-        }
-
-        const order = adminOrdersCache.find(o => String(o.id) === String(orderId));
-        if (order) order.status = status;
-
-        renderAdmin();
-        showToast("Status je ažuriran.");
-      }catch(error){
-        showToast("Nije moguće ažurirati status.");
-      }
-    }
-
-    async function clearOrders(){
-      const ok = window.confirm("Želiš li obrisati sve narudžbe?");
-      if (!ok) return;
-
-      try{
-        const response = await apiPost({
-          action: "clearOrders",
-          pin: adminPin
-        });
-
-        if (response && response.ok === false){
-          throw new Error(response.error || "Narudžbe nisu obrisane.");
-        }
-
-        adminOrdersCache = [];
-        renderAdmin();
-        showToast("Narudžbe su obrisane.");
-      }catch(error){
-        showToast("Nije moguće obrisati narudžbe.");
-      }
-    }
-
-    function downloadCsv(){
-      if (!adminOrdersCache.length){
-        showToast("Nema narudžbi za CSV.");
-        return;
-      }
-
-      const headers = [
-        "ID",
-        "Narudžba",
-        "Vrijeme",
-        "Kupac",
-        "Kontakt",
-        "Jelo",
-        "Količina",
-        "Cijena",
-        "Napomena",
-        "Status"
-      ];
-
-      const rows = adminOrdersCache.map(order => [
-        order.id,
-        order.orderGroup,
-        order.createdAt,
-        order.customerName,
-        order.customerContact,
-        order.productName,
-        order.quantity,
-        order.price,
-        order.note,
-        statusLabel(order.status)
-      ]);
-
-      const csv = [headers, ...rows]
-        .map(row => row.map(csvCell).join(","))
-        .join("\n");
-
-      const blob = new Blob(["\ufeff" + csv], { type:"text/csv;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "slatke-narudzbe.csv";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function csvCell(value){
-      const clean = String(value ?? "").replaceAll('"', '""');
-      return `"${clean}"`;
-    }
-
-    $("#openCartBtn").addEventListener("click", openCartDrawer);
-    $("#closeCartBtn").addEventListener("click", closeCartDrawer);
-    $("#closeCartBackdrop").addEventListener("click", closeCartDrawer);
-
-    $("#openAdminBtn").addEventListener("click", openAdmin);
-    $("#closeAdminBtn").addEventListener("click", closeAdmin);
-    $("#closeAdminBackdrop").addEventListener("click", closeAdmin);
-    $("#adminLoginBtn").addEventListener("click", adminLogin);
-    $("#adminPinInput").addEventListener("keydown", event => {
-      if (event.key === "Enter") adminLogin();
-    });
-
-    $("#refreshOrdersBtn").addEventListener("click", loadAdminOrders);
-    $("#downloadCsvBtn").addEventListener("click", downloadCsv);
-    $("#clearOrdersBtn").addEventListener("click", clearOrders);
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape"){
-        closeCartDrawer();
-        closeAdmin();
-      }
-    });
-
-    loadMenu();
   </script>
 </body>
 </html>
