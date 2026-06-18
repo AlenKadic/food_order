@@ -851,16 +851,85 @@
         max-width: 100%;
       }
 
+      .bottom-order-bar {
+        max-height: 78vh;
+        overflow-y: auto;
+      }
+
+      .bottom-order-inner {
+        padding: 8px 10px 10px;
+      }
+
+      .order-mini-strip {
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+
+      .order-mini-strip span:last-child {
+        display: none;
+      }
+
+      .order-panel {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding-top: 8px;
+      }
+
+      .selected-summary {
+        grid-column: 1 / -1;
+        min-height: 0;
+        padding: 9px 10px;
+        gap: 8px;
+      }
+
+      .selected-summary-emoji {
+        font-size: 22px;
+      }
+
+      .selected-summary-title {
+        font-size: 14px;
+      }
+
+      .selected-summary-sub {
+        display: none;
+      }
+
+      .note-wrap {
+        grid-column: 1 / -1;
+      }
+
+      .bottom-order-bar:not(.has-selection) .note-wrap {
+        display: none;
+      }
+
+      .note-wrap textarea {
+        min-height: 46px;
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+
+      .order-panel > .btn-light {
+        display: none;
+      }
+
+      #addToCartBtn,
+      #submitCartBtn {
+        padding: 11px 10px;
+        min-height: 44px;
+      }
+
       .bottom-order-bar:not(.mobile-confirm-open) .cart-list {
         display: none;
       }
 
       .bottom-order-bar.mobile-confirm-open .cart-list {
         display: grid;
+        max-height: 42vh;
       }
 
       .kiosk-page {
-        padding-bottom: 340px;
+        padding-bottom: 175px;
       }
     }
 
@@ -898,7 +967,7 @@
       }
 
       .kiosk-page {
-        padding-bottom: 340px;
+        padding-bottom: 175px;
       }
 
       .bottom-order-inner {
@@ -1490,7 +1559,10 @@
 
       if (bottomBar) {
         bottomBar.classList.toggle("mobile-confirm-open", state.mobileCartConfirm);
+        bottomBar.classList.toggle("has-selection", Boolean(state.selectedMenuId));
       }
+
+      updateMobileBottomPadding();
 
       if (totalQty === 1) {
         selectedCountText.textContent = "1 kombinacija u košarici";
@@ -1499,10 +1571,12 @@
       }
 
       submitBtn.disabled = totalQty === 0;
-      submitBtn.textContent =
-        isMobileLayout() && state.mobileCartConfirm && totalQty > 0
-          ? "Potvrdi i pošalji"
-          : "Pošalji narudžbu";
+
+      if (isMobileLayout() && totalQty > 0) {
+        submitBtn.textContent = state.mobileCartConfirm ? "Potvrdi i pošalji" : "Pregled košarice";
+      } else {
+        submitBtn.textContent = "Pošalji narudžbu";
+      }
 
       if (!state.cart.length) {
         cartList.innerHTML = "<div class='cart-empty'>Košarica je prazna.</div>";
@@ -1542,6 +1616,21 @@
 
     function isMobileLayout() {
       return window.matchMedia("(max-width: 820px)").matches;
+    }
+
+    function updateMobileBottomPadding() {
+      const page = document.querySelector("#screenMenu .kiosk-page");
+      const bottomBar = document.querySelector(".bottom-order-bar");
+
+      if (!page || !bottomBar) return;
+
+      if (!isMobileLayout()) {
+        page.style.paddingBottom = "";
+        return;
+      }
+
+      const height = bottomBar.offsetHeight || 0;
+      page.style.paddingBottom = Math.max(145, height + 16) + "px";
     }
 
     async function submitCartOrder() {
