@@ -425,6 +425,19 @@
       overflow: hidden;
     }
 
+    .product-visual.has-photo {
+      padding: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .product-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .product-name {
       font-size: 16px;
       font-weight: 900;
@@ -1420,11 +1433,28 @@
           selectMeal(item.id);
         };
 
+        const imageUrl = getDessertImage(item.name, item.description);
+        const visualHtml = imageUrl
+          ? "<div class='product-visual has-photo'>" +
+              "<img class='product-photo' src='" + escapeHtml(imageUrl) + "' alt='" + escapeHtml(item.name || "Slatka kombinacija") + "' loading='lazy'>" +
+            "</div>"
+          : "<div class='product-visual'>" + escapeHtml(getDessertVisual(item.name, item.description)) + "</div>";
+
         card.innerHTML =
-          "<div class='product-visual'>" + escapeHtml(getDessertVisual(item.name, item.description)) + "</div>" +
+          visualHtml +
           "<div class='product-name'>" + escapeHtml(item.name || "") + "</div>" +
           "<div class='product-desc'>" + escapeHtml(item.description || "Brownie, sladoled i slatki dodaci.") + "</div>" +
           "<div class='product-price'>" + escapeHtml(item.price || "") + "</div>";
+
+        const photo = card.querySelector(".product-photo");
+        if (photo) {
+          photo.addEventListener("error", function() {
+            const visual = photo.closest(".product-visual");
+            if (!visual) return;
+            visual.classList.remove("has-photo");
+            visual.innerHTML = escapeHtml(getDessertVisual(item.name, item.description));
+          });
+        }
 
         grid.appendChild(card);
       });
@@ -1960,6 +1990,28 @@
       a.download = "slatke_narudzbe.csv";
       a.click();
       URL.revokeObjectURL(url);
+    }
+
+    function getDessertImage(name, description) {
+      const n = (String(name || "") + " " + String(description || "")).toLowerCase();
+
+      if (n.includes("malin") || n.includes("raspber")) {
+        return "/images/čokolada-maline.png";
+      }
+
+      if (n.includes("med") || n.includes("orah") || n.includes("orasi")) {
+        return "/images/med-orasi.png";
+      }
+
+      if (n.includes("pistac") || n.includes("pistać") || n.includes("pistachio")) {
+        return "/images/pistacije.png";
+      }
+
+      if (n.includes("dulce") || n.includes("karamel") || n.includes("caramel") || n.includes("cimet")) {
+        return "/images/dulcedeleche-cimet.png";
+      }
+
+      return "";
     }
 
     function getDessertVisual(name, description) {
